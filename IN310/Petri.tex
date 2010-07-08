@@ -1,0 +1,34 @@
+\documentclass[compress]{beamer}
+
+\usetheme{Szeged}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[frenchb]{babel}
+\usepackage[babel=true,kerning=true]{microtype}
+\usepackage{tikz,listings,algorithm,algorithmic}
+\usetikzlibrary{automata,shapes,snakes,arrows}
+
+\tikzstyle{every picture}=[sibling distance=3cm, shorten >=1pt, node distance=2cm,%
+	>=stealth', bend angle=10, auto, initial text=]
+
+\title[Titre cours]{Titre long}
+\author[A.]{Auteur}
+\date[Annee]{Date}
+
+\graphicspath{{../figures/}}
+\lstset{basicstyle=\tiny,tabsize=2,%frame=single,%
+	emph={define,domain,requirements,strips,typing,types,predicates,
+		action,parameters,precondition,vars,effect,objects,init,goal},%
+	emphstyle=\bf}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\tableofcontents[hidesubsections]
+\end{frame}
+
+\end{document}
