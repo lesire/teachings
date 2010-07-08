@@ -1,19 +1,31 @@
 \documentclass[compress]{beamer}
 
-\usetheme{onera}
-\usepackage{listings,algorithm,algorithmic}
+\usetheme{Szeged}%onera}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[frenchb]{babel}
+\usepackage[babel=true,kerning=true]{microtype}
+\usepackage{tikz,listings,algorithm,algorithmic}
+\usetikzlibrary{automata,shapes,snakes,arrows}
+
+\tikzstyle{every picture}=[sibling distance=3cm, shorten >=1pt, node distance=2cm,%
+	>=stealth', bend angle=10, auto, initial text=]
 
 \title[SEM GI313 - Planification]{{\Large Planification}\\GI313 - Optimisation}
-\author[Charles Lesire]{Charles Lesire-Cabaniols (ONERA / DCSD)}
+\author[Charles Lesire]{Charles Lesire-Cabaniols (ONERA / DCSD)\\{\tt charles.lesire@onera.fr}}
 \date[2010-2011]{3A-SEM - 2010-2011}
 
-\graphicspath{{./},{figures/}}
+\graphicspath{{../figures/}}
 \lstset{basicstyle=\tiny,tabsize=2,%frame=single,%
 	emph={define,domain,requirements,strips,typing,types,predicates,
 		action,parameters,precondition,vars,effect,objects,init,goal},%
 	emphstyle=\bf}
 
 \begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
 \begin{frame}
 \tableofcontents[hidesubsections]
 \end{frame}
@@ -34,7 +46,8 @@
 	\item[ex:] élaboration interactive de plans, réseaux PERT\dots
 	\end{itemize}
 \end{itemize}
-\begin{tikzpicture}[scale=.6,transform shape,%
+\begin{center}
+\begin{tikzpicture}[scale=.5,transform shape,%
 	circle/.style={circle split, draw=black, thick,%
 		inner sep=0pt, node distance=3cm}]
 \draw[use as bounding box, transparent] (0,-3) grid[help lines] (15,4);
@@ -68,6 +81,7 @@
 	\path[overlay,draw]<2-> (n\a) edge[->] (n\b);
 }}
 \end{tikzpicture}
+\end{center}
 \end{frame}
 
 \begin{frame}{Qu'est-ce que planifier ?}
@@ -130,7 +144,7 @@ Système Etat-Transition $\Sigma = (S, A, E, \gamma)$
 	\end{itemize}
 \end{itemize}
 \begin{block}{Problème de planification}
-quelles \structure{actions} appliquer à quels états en vue de réaliser des \structure{objectifs} ?
+Quelles \structure{actions} appliquer dans quels états en vue de réaliser des \structure{objectifs}~?
 \end{block}
 \end{frame}
 
@@ -139,7 +153,7 @@ quelles \structure{actions} appliquer à quels états en vue de réaliser des \s
 \begin{tikzpicture}[%
 	block/.style={draw,fill=blue!20,rectangle,minimum height=3em,minimum width=6em},%
 	pin edge={to-,thin,black},
-	auto, node distance=2cm, >=latex']
+	auto, node distance=2cm, >=latex', scale=.8, transform shape]
 \node[block,pin={left:But, Etat initial},pin={above:Description de $\Sigma$}] (planif) {Planificateur};
 \node[block,below of=planif] (control) {Contrôleur};
 \node[block,below of=control,pin={below:Evénements}] (system) {Système $\Sigma$};
@@ -342,6 +356,11 @@ quelles \structure{actions} appliquer à quels états en vue de réaliser des \s
 	:precondition (and (at ?r ?l) (belong ?c ?l) (loaded ?r ?k) (empty ?c))
 	:effect (and (unloaded ?r) (holding ?c ?k) (not (loaded ?r ?k))
 		(not (empty ?c))))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Langage de représentation}
+\begin{lstlisting}
 (: action take
 	:parameters (?c - crane ?k - container ?p - pile)
 	:vars (?l - location ?else container)
@@ -444,7 +463,7 @@ quelles \structure{actions} appliquer à quels états en vue de réaliser des \s
 \end{frame}
 
 \begin{frame}{$A^*$}
-\begin{algorithmic}
+\begin{algorithmic}\small
 \REQUIRE $G=(S,E)$ le graphe implicite, $s_0$ état initial, $S_g$ but
 \STATE $\forall s \in S, \, g(s) \leftarrow \infty, p(s) \leftarrow s \qquad
 	c(s_0) \leftarrow 0$, $\mathcal{O} \leftarrow \{s_0\}$
@@ -554,7 +573,7 @@ $$h \mbox{ monotone} \Leftrightarrow \forall (u, v) \in E, \; h(u) - h(v) \leq k
 		\RETURN path
 	\ELSE
 		\STATE \structure{Choose} $g \in \gamma$
-		\STATE relevant $\leftarrow \{a \in A \, / \, effts(a) \models g\}$
+		\STATE relevant $\leftarrow \{a \in A \, / \, effects(a) \models g\}$
 		\IF {relevant $= \emptyset$}
 			\RETURN FAIL
 		\ELSE
@@ -608,7 +627,7 @@ $$h \mbox{ monotone} \Leftrightarrow \forall (u, v) \in E, \; h(u) - h(v) \leq k
 \item PSP, HTN, UMCP
 \end{itemize}
 \begin{center}
-\includegraphics[width=.6\linewidth]{exHTN}
+\includegraphics[width=.8\linewidth]{exHTN}
 \end{center}
 \end{frame}
 
