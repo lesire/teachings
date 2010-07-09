@@ -1,11 +1,11 @@
 \documentclass[compress]{beamer}
 
 \usetheme{Szeged}
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
 \usepackage[babel=true,kerning=true]{microtype}
-\usepackage{tikz,listings,algorithm,algorithmic}
+\usepackage{tikz,listings,algorithm,algorithmic,hyperref}
 \usetikzlibrary{automata,shapes,snakes,arrows}
 
 \tikzstyle{every picture}=[sibling distance=3cm, shorten >=1pt, node distance=2cm,%
@@ -359,587 +359,337 @@ $$M \geq Pre(.,t_1) \; \mbox{e} \; M \geq Pre(.,t_2)$$
 %$$Pre(.,d) = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$$
 \end{frame}
 
-% \begin{frame}
-% \frametitle{Séquence de tir}
-%\begin{itemize}
-%\item
-%$
-%\begin{array}{ccccccc}
-%  \left[
-%  \begin{array}{c}
-%  0\\
-%  3\\
-%  0
-%  \end{array}
-%  \right] &
-%  \stackrel{a}{\longrightarrow} &
-%  \left[
-%  \begin{array}{c}
-%  1\\
-%  2\\
-%  0
-%  \end{array}
-%  \right] &
-%  \stackrel{a}{\longrightarrow} &
-%  \left[
-%  \begin{array}{c}
-%  2\\
-%  1\\
-%  0
-%  \end{array}
-%  \right] &
-%  \stackrel{b}{\longrightarrow} &
-%  \left[
-%  \begin{array}{c}
-%  1\\  
-%  2\\
-%  0
-%  \end{array}
-%  \right]. \\ M_0 & & M_1 & & M_2 & & M_1
-%\end{array}
-%$
-%\item  $M'$ accessible à  partir de $M$: 
-%$M \stackrel{t}{\longrightarrow} M'$,   
-%\item $M_0 \stackrel{a}{\longrightarrow} M_1$, 
-% $M_1 \stackrel{a}{\longrightarrow} M_2$,
-% $M_2 \stackrel{b}{\longrightarrow} M_1$, 
-%\item si $M \stackrel{t_1}{\longrightarrow} M'$,   et
-%$M' \stackrel{t_2}{\longrightarrow} M''$, on a $s=t_1t_2$ et
-%$M \stackrel{t_1t_2}{\longrightarrow} M''$;
-%\item
-%dans l'exemple, $M_0 \stackrel{s}{\longrightarrow} M_1$, avec $s=aab$, $s$ 
-%est dite séquence de tir,
-%\item ${\bf s} : T \rightarrow \nat$; ${\bf s}(t)$: nombre 
-%d'occurrences de $t$ dans $s$
-%\item \fbox{$M'=M+C{\bf s}$} ~ ~ ~ {\color{blue} Équation fondamentale}
-%\end{itemize}
+\begin{frame}{Séquence de tir}
+$$\begin{array}{ccccccc}
+\begin{pmatrix} 0\\ 3\\ 0 \end{pmatrix} & \stackrel{a}{\longrightarrow} &
+\begin{pmatrix} 1\\ 2\\ 0 \end{pmatrix} & \stackrel{a}{\longrightarrow} &
+\begin{pmatrix} 2\\ 1\\ 0 \end{pmatrix} & \stackrel{b}{\longrightarrow} &
+\begin{pmatrix} 1\\ 2\\ 0 \end{pmatrix}\\
+M_0 & & M_1 & & M_2 & & M_1
+\end{array}$$
+\begin{itemize}
+\item $M'$ accessible à  partir de $M$: $M \stackrel{t}{\longrightarrow} M'$
+\item $M_0 \stackrel{a}{\longrightarrow} M_1$, $M_1 \stackrel{a}{\longrightarrow} M_2$, $M_2 \stackrel{b}{\longrightarrow} M_1$, 
+\item si $M \stackrel{t_1}{\longrightarrow} M'$, et $M' \stackrel{t_2}{\longrightarrow} M''$, on a $s=t_1t_2$ et $M \stackrel{t_1t_2}{\longrightarrow} M''$
+\item dans l'exemple, $M_0 \stackrel{s}{\longrightarrow} M_1$, avec $s=aab$, $s$ est dite séquence de tir
+\begin{eqnarray*}
+{\bf s} : &T& \rightarrow \mathbb{N}\\
+		  &t& \mapsto \mbox{ nombre d'occurrences de $t$ dans $s$}
+\end{eqnarray*}
+\end{itemize}
+\end{frame}
 
-% \pause
-%Questions:
-%\begin{itemize}
-%\item étant donné  $M$  et une sequence $s$, il existe $M' ~\mid
-%M \stackrel{s}{\longrightarrow} M'$?
-%\item étant donné $M$ et $M'$ il existe $s$ tel que $M \stackrel{s}{\longrightarrow} M'$?
-%\end{itemize}
-
-% \end{frame}
+\begin{frame}{Séquence de tir}
+\begin{itemize}
+\item \structure{Équation fondamentale :} \fbox{$M'=M+C{\bf s}$}
+\item Etant donné $M$ et une sequence $s$, existe-t-il $M'$ t.q. $M \stackrel{s}{\longrightarrow} M'$~?
+\item Etant donné $M$ et $M'$, existe-t-il $s$ t.q. $M \stackrel{s}{\longrightarrow} M'$~?
+\end{itemize}
+\end{frame}
  
+\subsection{Autres représentations}
+\begin{frame}{Système de règles}
+\begin{itemize}
+\item une base de faits, représentant la connaissance disponible sur le système,
+\item une base de règles, qui permet de déduire de nouveaux faits,
+\item un {\em moteur d'inférence}, qui permet de
+réaliser de nouvelles déductions, appliquant les règles aux faits.
+\end{itemize}
+\end{frame}
 
-%  \begin{frame}
-% \frametitle{Autres représentations}
-% {\color{blue} Système de règles}
+\begin{frame}{Grammaire}
+\begin{itemize}
+\item un alphabet $\Pi$ dont les symboles sont les places $p \in P$
+\item un ensemble $Q$ de règles de réécriture :
+$$t: \mu(Pre(.,t)) \rightarrow \mu(Post(.,t))$$
+\item $\mu: \mathcal{M} \rightarrow {\Pi}^*$, $\mathcal{M}$ l'ensemble de tous les marquages et ${\Pi}^*$ l'ensemble des séquences finies (dont la séquence vide $\lambda$)
+\item transition sensibilisée : 
+$$\mu(Pre(.,t)) \subseteq \mu(M)$$
+\item tir de transition : 
+$$\mu(M')=\mu(M) \cup \mu(Post(.,t)) \setminus \mu(Pre(.,t))$$
+\end{itemize}
+\end{frame}
+
+%%%%% PROPRIETES %%%%%
+\section{Analyse de propriétés}
+\subsection{Propriétés comportementales}
+\begin{frame}{Réseau borné}
+\begin{itemize}
+\item Place \structure{k-bornée} : le nombre maximal de jetons de la place, pour tout marquage accessible, est plus petit que $k$
+$$\forall M' \in \mathcal{A}(\mathcal{R}, M_0), \quad M'(p) \leq k$$
+\item Si $k = 1$, la place est dite \structure{binaire},
+\item Un réseau marqué est \structure{k-borné} ssi toutes ses places le sont
+\item Un réseau marqué est \structure{binaire} ssi toutes ses places le sont
+\end{itemize}
+\begin{center}
+\includegraphics[width=.25\linewidth]{nonbor}
+\end{center}
+\end{frame}
  
-% \vspace{.1cm}
-%\begin{itemize}
-%\item
-%une base de faits, représentant la connaissance disponible sur le système,
-%\item
-%une base de règles, qui permet de déduire de nouveaux faits,
-%\item
-%{\em un moteur d'inférence}, qui permet de
-%réaliser de nouvelles déductions, appliquant les règles aux faits.
-%\end{itemize}
-
-%\vspace{.2cm}
-%\noindent
-%{\color{blue} Grammaire}
-
-%\vspace{.1cm}
-%\begin{itemize}
-%\item
-%un alphabet $\p$ dont les symboles sont les places $p \in P$, et
-%\item
-%un ensemble $Q$ de règles de réécriture :\\
-%$t: \mu(Pre(.,t)) \rightarrow \mu(Post(.,t)).$
-%\item $\mu:  \m \rightarrow {\p}^*$, $\m$ est l'ensemble de tous les marquages et ${\p}^*$ l'ensemble de séquences finies dont la séquence vide $\lambda$
-%\item transition sensibilisée : $\mu(Pre(.,t)) \subseteq \mu(M)$,
-%\item tir de transition : $\mu(M')=\mu(M) \cup \mu(Post(.,t)) \setminus \mu(Pre(.,t)).$  
-%\end{itemize}
-
-% \end{frame}
- 
-%  \begin{frame}
-% \frametitle{Propriétés du modèle : réseau $<\!R,M_0\!>$ borné}
-% \begin{itemize}
-%\item place k-bornée: $\forall M' \in {\cal A(R},M_0), \;\;\; M'(p) \leq k$\\
-%le nombre maximal de jetons pour tout marquage est plus petit que $k$,
-%\item si k=1, place binaire,
-%\pause
-%\item réseau marqué k-borné : ssi toutes les places sont k-bornés,
-%\item  réseau marqué binaire : ssi toutes les places sont binaires.
-%\end{itemize}
-%\begin{center}
-%\includegraphics[width=4.5cm]{./figSH/nonbor}
-%\end{center}
-% \end{frame}
- 
- 
-% \begin{frame}
-% \frametitle{Propriétés du modèle : réseau $<\!R,M_0\!>$ vivant}
-% \begin{itemize}
-%\item Transition {\color{blue}quasi-vivante} : si $ \exists M \in  {\cal A(R},M_0)  \mid
-%M \stackrel{t}{\longrightarrow}$\\
-%ou : 
-%$\exists s \mid M_0 \stackrel{s}{\longrightarrow} M \;\;\; {\rm et}\;\;\; 
-%M \stackrel{t}{\longrightarrow}$\\
-%($t$ peut être sensibilisée à
-%partir de $M_0$ par le tir de la séquence $s$).
-%\pause
-%\item Transition {\color{blue}vivante} :
-%$t$ doit pouvoir être sensibilisée à partir de n'importe quel
-%marquage $M$, utilisant une séquence $s$:
-%$\forall M \in {\cal A(R},M_0), \; \exists s  \mid \; M \stackrel{st}{\longrightarrow}.$ 
-%\pause
-%\item Réseau marqué vivant : $N$ est vivant ssi toutes les transitions sont vivantes :
-%$\forall t \in T, \; \forall M \in {\cal A(R},M_0), \; 
-%\exists s  \mid \; M \stackrel{st}{\longrightarrow}.$
-%\end{itemize}
-
-%\begin{center}
-%\includegraphics[width=3.9cm]{./figSH/qviva-n}
-%\end{center}
-%  \end{frame}
+\begin{frame}{Réseau vivant}
+\begin{itemize}
+\item Transition \structure{quasi-vivante} : 
+$$\exists s \, / \; M_0 \stackrel{s}{\longrightarrow} M \quad \mbox{et} \quad 
+M \stackrel{t}{\longrightarrow}$$
+\item Transition \structure{vivante} :
+$$\forall M \in {\cal A(R},M_0), \; \exists s \, / \; M \stackrel{st}{\longrightarrow}$$
+\item Réseau \structure{vivant} ssi toutes ses transitions sont vivantes
+\end{itemize}
+\begin{center}
+\includegraphics[width=.35\linewidth]{qviva-n}
+\end{center}
+\end{frame}
   
-%   \begin{frame}
-% \frametitle{Propriétés du modèle : réseau $<\!R,M_0\!>$ réinitialisable}
-% \begin{itemize}
-%\item Réseau marqué  {\color{blue}réinitialisable} : il est possible de revenir au
-%marquage initial à  partir de n'importe quel marquage: \\
-%\[\forall M \in A(R,M_0), \;\;\; \exists s \mid \;\;\;
-%M \stackrel{s}{\longrightarrow} M_0.\]
-%\end{itemize}
-%\begin{center}
-%\includegraphics[width=6.5cm]{./figSH/nonrei-g}
-%\end{center}
+\begin{frame}{Réseau réinitialisable}
+\begin{itemize}
+\item Réseau marqué \structure{réinitialisable} s'il est possible de revenir au marquage initial à  partir de n'importe quel marquage :
+$$\forall M \in {\cal A(R}, M_0), \quad \exists s \, / \; M \stackrel{s}{\longrightarrow} M_0$$
+\end{itemize}
+\begin{center}
+\includegraphics[width=.7\linewidth]{nonrei-g}
+\end{center}
+\end{frame}
+
+\subsection{Propriétés structurelles}
+\begin{frame}{Composantes conservatives}
+\begin{itemize}
+\item circuit formé par $p_1$, $p_2$, $a$, $b$: $M(p_1) + M(p_2)$ est constant
+	\begin{itemize}
+	\item $M_0 = {}^t\begin{pmatrix}1 & 0 & 3 & 0 & 1\end{pmatrix}$
+	\item $M_0 \stackrel{a}{\longrightarrow} 
+		M'= {}^t\begin{pmatrix}0 & 1 & 2 & 0 & 1\end{pmatrix}$
+	\item $M' \stackrel{b}{\longrightarrow} M'' = M_0$
+	\end{itemize}
+\end{itemize}
+\begin{center}
+	\includegraphics[width=.4\linewidth]{inv}
+\end{center}
+\begin{itemize}
+\item Marquage obtenu après une séquence de tir : $M' = M + Cs$
+\item Composante conservative : $f \, / \; {}^tf \, C = 0$
+\item dans l'exemple :
+$$\scriptstyle
+{}^tf^1 = \begin{pmatrix}1&1&0&0&0\end{pmatrix}, \;
+{}^tf^2 = \begin{pmatrix}0&1&1&3&0\end{pmatrix}, \;
+{}^tf^3 = \begin{pmatrix}0&0&0&1&1\end{pmatrix}$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Invariants de place}
+\begin{itemize}
+\item Invariant de place = composante conservative + marquage
+\item ${}^tf \, C = 0 \Rightarrow {}^tf \, M = {}^tf \, M_0 \quad \forall M \in {\cal A(R}, M_0)$
+\item $M(p_1) + M(p_2) = M_0(p_1) + M_0(p_2)=1$
+\item $M(p_2) + M(p_3) + 3.M(p_4) = 3$  
+\item $M(p_4) + M(p_5) =1$  
+\end{itemize}
+{\bf Remarque} 
+\begin{itemize}
+\item composante conservative : dépend seulement de la structure !
+\item invariant de place : dépend de la structure \structure{et} du marquage
+\end{itemize}
+\end{frame}
   
-%   \end{frame}
+\begin{frame}{Composantes répétitives stationnaires}
+\begin{itemize}
+\item Sous-réseau formé par $c$ et $d$, et places $p_3$, $p_4$ et $p_5$ : le tir de $s = cd$ à partir de $M_0$ ramène au même marquage
+\item Transitions $c$ et $d$ forment une \structure{composante répétitive stationnaire}
+\item $M' = M \Rightarrow C \, s = 0 \quad s \mbox{ composante répétitive}$
+\item Dans l'exemple :
+$$s^1 = {}^t\begin{pmatrix}1&1&0&0\end{pmatrix}, \;
+s^2 = {}^t\begin{pmatrix}0&0&1&1\end{pmatrix}$$
+\end{itemize}
+\begin{center}
+	\includegraphics[width=.4\linewidth]{inv}
+\end{center}
+\end{frame}
   
-%   \begin{frame}
-% \frametitle{Propriétés structurelles : réseau $R$}
-% \begin{itemize}
-%\item dérivent directement de la {\em structure} du réseau de Petri,
-%\item ne dépendent pas du marquage initial,
-%\item composantes + marquage = invariants.  
-%\end{itemize}
+\begin{frame}{Invariants de transition}
+\begin{itemize}
+\item Séquences $s_i$ obtenues à partir du vecteur $s$
+\item Pour $s_1$ on peut avoir les invariants $s_{11} = ab$ et $s_{12} = ba$
+\item Il faut calculer $M \stackrel{ab}{\longrightarrow}$ et $M \stackrel{ba}{\longrightarrow}$ pour vérifier !
+\end{itemize}  
+{\bf Remarque} 
+\begin{itemize}
+\item Composante répétitive : dépend seulement de la structure !
+\item Invariant de transition : dépend de la structure \structure{et} du  marquage
+\end{itemize}
+\end{frame}
 
-%\vspace{1cm}
-%\noindent
-% Composantes {\color{blue}conservatives} et invariants de {\color{blue}place}
+\begin{frame}{Exemple : Système par lot}
+\begin{columns}
+	\begin{column}{.4\linewidth}
+	\begin{center}
+		\includegraphics[width=\linewidth]{rea1}
+	\end{center}
+	\end{column}		
+	\begin{column}{.66\linewidth}
+		\begin{itemize}
+		\item $f^1 = {}^t\begin{pmatrix}1&1&1&1&1&0&0&0&0\end{pmatrix}$~:
+			fabrication de $Pr_1$
+		\item $f^2 = {}^t\begin{pmatrix}0&0&0&0&0&1&1&0&0\end{pmatrix}$~:
+			fabrication de $Pr_1$
+		\item $f^3 = {}^t\begin{pmatrix}0&0&1&0&0&0&0&1&0\end{pmatrix}$~:
+			état du réacteur $R_1$
+		\item $f^4 = {}^t\begin{pmatrix}0&0&0&0&1&0&1&0&1\end{pmatrix}$~:
+			état du réacteur $R_2$
+		\end{itemize}
+	\end{column}
+\end{columns}
+\end{frame}
 
-%\vspace{1cm}
-%\noindent
-%Composantes {\color{blue}répétitives} et invariants de {\color{blue}transition}
-%  \end{frame}
-  
-%   \begin{frame}
-% \frametitle{Composantes conservatives}
+\begin{frame}{Exemple : Système par lot}
+\begin{columns}
+	\begin{column}{.4\linewidth}
+	\begin{center}
+		\includegraphics[width=\linewidth]{rea1}
+	\end{center}
+	\end{column}		
+	\begin{column}{.65\linewidth}
+		\begin{itemize}
+		\item $M(p_1)+M(p_2)+M(p_3)+M(p_4)+M(p_5)=1$~: un seul état pour $Pr_1$ (attente, $B_1$, $B_2$, $R_1$, $R_2$)
+		\item $M(p_6)+M(p_7)=1$~: un seul état pour $Pr_2$ (attente ou $R_2$)
+		\item $M(p_3)+M(p_8)=1$~: $R_1$ libre ou prod. $Pr_1$
+		\item $M(p_5)+M(p_7)+M(p_9)=1$~: $R_2$ libre ou prod. $Pr_1$ ou $Pr_2$
+		\end{itemize} 
+	\end{column}
+\end{columns}
+\end{frame}
  
-% \begin{columns}
-%\column{.56\textwidth}
-% \begin{itemize}
-%\item
-%circuit formé par $p_1$, $p_2$, $a$, $b$:\\
-%$M(p_1)+M(p_2)$  ne change pas :
-%\begin{itemize}
-%\item  $M_0= [1\; 0\; 3\; 0\; 1]^T$
-%\item $M_0 \stackrel{a}{\longrightarrow}M'= [0\; 1\; 2\; 0\; 1]^T$
-%\item $M' \stackrel{b}{\longrightarrow}M''=M_0$
-%\end{itemize}
-% \end{itemize}
-%\column{.44\textwidth}
-%\includegraphics[width=5.2cm]{./figSH/inv}
-%\end{columns}
-% \begin{itemize}
+\begin{frame}{Exemple : Système par lot}
+\begin{columns}
+	\begin{column}{.4\linewidth}
+	\begin{center}
+		\includegraphics[width=\linewidth]{rea1}
+	\end{center}
+	\end{column}		
+	\begin{column}{.65\linewidth}
+		\begin{itemize}
+		\item $s^1 = {}^t\begin{pmatrix}1&1&1&0&0&0&0&0\end{pmatrix}$~:
+		$Pr_1$ passe par le {\em buffer} et est prod. par $R_1$ ; un nouveau cycle peut recommencer ;
+		\item $s^2 = {}^t\begin{pmatrix}0&0&0&1&1&1&0&0\end{pmatrix}$~:
+		même comportement pour $Pr_2$ et $R_2$ ;
+		\item $s^3 = {}^t\begin{pmatrix}0&0&0&0&0&0&1&1\end{pmatrix}$~:
+		début de prod. de $Pr_2$ et fin
+		\end{itemize} 
+	\end{column}
+\end{columns}
+\end{frame}
 
-%\item
-%circuit formé par $p_2$,$p_3$ et $p_4$, $a$,$b$,$c$ et $d$ :\\
-%$M(p_2)+M(p_3)+3.M(p_4)=$ cte:\\
-%\item
-%fonctionnement dynamique  de $R$ est donné par $M'=M+C{\bf s}$ : \\
-%pour obtenir une somme pondérée de
-%marquages \\
-%$\leadsto$ multiplier l'éq. par ${\bf f}^T$:
-%$~~~{\bf f}^TM' = {\bf f}^TM + {\bf f}^TC\bf{s}$
-%\item pour que lŽéquation soit indépendante des séquences de tir $s$: \\
-%annuler le produit ${\bf f}^TC$.
-%\item composante conservative : ${\bf f}^TC = 0$ $\leadsto$ défini un sous-réseau de Petri  
-% \pause
-%\item dans l'exemple : \\
-%${\bf f}^1=[\,1~1~0~0~0\,]^T$, ${\bf f}^2=[\,0~1~1~3~0\,]^T$ et
-%${\bf f}^3=[\,0~0~0~1~1\,]^T.$
-%\end{itemize}
+\begin{frame}{Exemple : Système par lot}
+\begin{columns}
+	\begin{column}{.4\linewidth}
+	\begin{center}
+		\includegraphics[width=\linewidth]{rea1}
+	\end{center}
+	\end{column}		
+	\begin{column}{.65\linewidth}
+		Seules séquences effectivement réalisables :
+		\begin{itemize}
+		\item $s_1 = t_a t_b t_c$
+		\item $s_2 = t_d t_e t_f$
+		\item $s_3 = t_g t_h$
+		\end{itemize} 
+	\end{column}
+\end{columns}
+\end{frame}
 
-%  \end{frame}
-  
-%   \begin{frame}
-% \frametitle{Invariants de place}
-% \begin{itemize}
-%\item Invariants de place
-% = composante conservative + marquage\\
-%  (la composante conservative est une information {\color{blue} structurelle})
-%\item
-%comme  ${\bf f}^TC = 0$,  on a ${\bf f}^TM = {\bf f}^TM_0 \;\;\forall M \in
-%A(R,M_0)$\\
-%$\leadsto$ invariant de place
-% \pause
-%\item $M(p_1) + M(p_2) = M_o(p_1) + M_o(p_2)=1$
-%\item $M(p_2) + M(p_3) + 3.M(p_4) = 3$  
-%\item $M(p_4) + M(p_5) =1$  
-%\end{itemize}
-
-%\vspace{.1cm}
-%\noindent
-%{\bf Remarque} 
-
-%\begin{itemize}
-%\item
-%composante conservative : dépend seulement de la structure !
-%\item
-%invariant de place : dépend de la  {\color{blue}structure} {\bf et} du  {\color{blue}marquage}.  
-%\end{itemize}
-
-%  \end{frame}
-  
-%   \begin{frame}
-% \frametitle{Composantes répétitives stationnaires}
+\subsection{Analyse}
+\begin{frame}{Analyse des propriétés}
+\begin{description}
+\item[Analyse par énumération des marquages] le graphe des marquages accessibles est calculé, vérifiant si le réseau est borné, vivant et réinitialisable.
+\item[Analyse structurelle] calcul des composantes conservatives et répétitives stationnaires et des invariants correspondants ; ne permet pas toujours d'avoir une réponse, mais dans certains cas, permet d'obtenir une réponse simples et rapide des propriétés du réseau.
+\item[Analyse par réduction] si le réseau est trop grand ou non borné, on peut réduire la taille du réseau, en utilisant certaines règles de réduction.
+\end{description}
+\end{frame}
  
-
-% \begin{itemize}
-%\item sous-réseau formé par $c$ et $d$, et places $p_3$, $p_4$ et $p_5$:\\
-%tir de $s=cd$ à partir de $M_0$ ramène au même marquage !
-%\item
-%transitions $c$ et $d$ forment une composante répétitive stationnaire.
-%\item
-%fonctionnement dynamique  $M'=M+C{\bf s}$: pour que $M'=M$, $C{\bf s}=0$
-%\item solution $\bf{s}$:  {\em composante répétitive}
-% $\leadsto$ définit un sous-réseau
-%avec transitions ${\bf s}(t) \neq 0$, et places d'entrée et sortie,
-%\item dans l'exemple: ${\bf s}^1=[\,1~1~0~0\,]^T$, ${\bf s}^2=[\,0~0~1~1\,]^T$ 
-%\end{itemize}
-
-%\begin{center}
-%\includegraphics[width=5.2cm]{./figSH/inv}
-%\end{center}
-%  \end{frame}
-  
-%     \begin{frame}
-% \frametitle{Invariants de transition}
+\begin{frame}{Analyse par énumération des marquages}
+\begin{block}{Arbre de couverture}
+\begin{itemize}
+\item On part du marquage initial $M_0$,
+\item On crée une branche pour chaque transition sensibilisée par $M_0$,
+\item La construction d'une branche est interrompue quand on rencontre un marquage
+	\begin{itemize}
+	\item déjà calculé,
+	\item strictement supérieur à un marquage {\em de la branche qui est en train d'être explorée}.
+	\end{itemize}
+\end{itemize}  
+Si le réseau est non borné, on introduit le symbole $\omega$ pour rendre l'arbre fini.
+\end{block}
+\end{frame}  
  
-%\begin{itemize}
-%\item séquences $s_i$ obtenues à partir du vecteur ${\bf s}$
-%\item pour ${\bf s_1}$ on a les invariants $s_1=ab$, $s_2=ba$: tous les
-%  invariants ne correspondent pas forcement à une séquence possible !!
-%\item il faut calculer $M \stackrel{ab}{\longrightarrow}$ et
-%$M \stackrel{ba}{\longrightarrow}$ pour vérifier !
-%\end{itemize}  
+\begin{frame}{Analyse par énumération des marquages}
+\begin{block}{Recherche des propriétés sur ${\cal A(R},M)$}
+\begin{itemize}
+\item Réseau \structure{$k$-borné} $\Leftrightarrow {\cal A(R},M)$ borné
+\item Réseau \structure{réinitialisable} $\Leftrightarrow {\cal A(R},M)$ fortement connexe
+$$\forall M_i, M_j \in {\cal A(R},M), \; \exists s \, / \; M_i \stackrel{s} M_j$$
+\item Réseau \structure{vivant} $\Leftrightarrow {\cal A(R},M)$ fortement connexe et chaque transition étiquette au moins un arc
+$$\forall t \in T, \exists M_i, M_j \in {\cal A(R},M), \; / \; M_i
+\stackrel{t}{\rightarrow} M_j$$
+\end{itemize}  
+\end{block}
+\end{frame}  
 
-%\vspace{.1cm}
-%\noindent
-%{\bf Remarque} 
-
-%\begin{itemize}
-%\item
-% composante répétitive : dépend seulement de la structure !
-%\item
-%invariant de transition : dépend de la  {\color{blue}structure} {\bf et} du  {\color{blue}marquage} (besoin de calculer $M \stackrel{s_i}{\longrightarrow}$).  
-%\end{itemize}
-%  \end{frame}
-  
+\begin{frame}{Analyse par énumération des marquages}
+\begin{center}
+\includegraphics[width=.8\linewidth]{qviva-g}
+\end{center}
+\end{frame}  
  
-%  \begin{frame}
-% \frametitle{Exemple : Système par lot}
-% {\color{blue} Composantes conservatives:}
-
-%\vspace{.2cm}
-% ${\bf f}^1=[\,1~1~1~1~1~0~0~0~0\,]^T$,
-%${\bf f}^2=[\,0~0~0~0~0~1~1~0~0\,]^T$, ${\bf f}^3=[\,0~0~1~0~0~0~0~1~0\,]^T$,
-%${\bf f}^4=[\,0~0~0~0~1~0~1~0~1\,]^T$, \\
-%qui définissent les réseaux :
-
-%\vspace{.2cm}
-%\begin{itemize}
-%\item
-% $p_1$, $p_2$, $p_3$, $p_4$ et $p_5$, et  $t_a$, $t_b$,
-%$t_c$, $t_d$, $t_e$ et $t_f$:  2 options  de fab. de $Pr_1$;
-%\item
-%$p_6$ et $p_7$,  $t_g$ et $t_h$: fabrication du produit $Pr_2$;
-%\item
-%$p_3$ et $p_8$,  $t_b$ et $t_c$:  les évolutions de l'état du réacteur $R_1$;
-%\item
-% $p_5$, $p_7$ et $p_9$, $t_e$, $t_f$, $t_g$ e $t_h$:
-%les évolutions de l'état du réacteur $R_2$.
-%\end{itemize}
-
-%\begin{center}
-%\includegraphics[width=5.2cm]{./figSH/rea1}
-%\end{center}
-
-% \end{frame}
-
-% \begin{frame}
-% \frametitle{Exemple : Système par lot}
-% {\color{blue} Invariants de place (pour $M_0 = p_1p_8p_9$) :}
-
-
-%\vspace{.1cm}
-%\begin{itemize}
-%\item
-%$I_1$:   $M(p_1)+M(p_2)+M(p_3)+M(p_4)+M(p_5)=1$: lot  $Pr_1$  en attente
-% ($p_1$),  en $B_1$ ($p_2$), en $B_2$ ($p_4$), dans $R_1$  ($p_3$) ou $R_2$ ($p_5$),
-%\item
-%$I_2$: $M(p_6)+M(p_7)=1$: \\
-%existe un lot $Pr_2$ en attente ($p_6$) ou dans
-%$R_2$ ($p_7$);
-%\item
-%$I_3$: $M(p_3)+M(p_8)=1$: \\
-%$R_1$ libre ($p_8$) ou en cours de proc. dans $Pr_1$ ($p_3$);
-%\item
-%$I_4$: $M(p_5)+M(p_7)+M(p_9)=1$:  \\
-%$R_2$ libre ($p_9$), en cours proc. dans
-% $Pr_1$ ($p_5$) ou  $Pr_2$ ($p_7$).
-%\end{itemize} 
-  
-% \begin{center}
-%\includegraphics[width=4.8cm]{./figSH/rea1}
-%\end{center}
-% \end{frame}
+\begin{frame}{Analyse structurelle}
+\begin{block}{Composantes conservatives}
+\begin{itemize}
+\item Toute place qui \structure{appartient} à une composante conservative  est \structure{bornée}
+\item Une place $p$ qui n'appartient à aucune composante conservative ($f(p)=0$) peut être bornée
+\item Une place \structure{non bornée} n'appartient à \structure{aucune} composante conservative
+\end{itemize}
+Un réseau de Petri pour lequel il existe une couverture de composantes 
+conservatives ($f>0$) est \structure{k-borné}, {\it peu importe son marquage initial.}
+\end{block}
+\end{frame}  
  
-% \begin{frame}
-% \frametitle{Exemple : Système par lot}
-% {\color{blue} Composantes répétitives stationnaires} 
+\begin{frame}{Analyse structurelle}
+\begin{block}{Invariants de place}
+${}^tf \, M = {}^tf \, M_0$ permet de calculer une limite pour \structure{chaque place} $p$
+$$f(p) M(p) \leq {}^tf \, M_0, \qquad M(p) \leq \frac{{}^tf \, M_0}{f(p)}$$
+\end{block}
+\end{frame}  
 
-%\vspace{.1cm}
-% \begin{itemize}
-%\item
-%vecteurs ${\bf s}^1=[\,1~1~1~0~0~0~0~0\,]^T$,
-%${\bf s}^2=[\,0~0~0~1~1~1~0~0\,]^T$ et
-%${\bf s}^3=[\,0~0~0~0~0~0~1~1\,]^T$,
-%\item
-%$t_a$, $t_b$ e $t_c$, avec  $p_1$, $p_2$, $p_3$ et $p_8$: 
-% le lot $Pr_1$ passe par le {\em buffer} et est proc. par $R_1$; un
-%nouveau cycle peut recommencer ;
-%\item
-%$t_d$, $t_e$ et $t_f$ +  $p_1$, $p_4$, $p_5$ et $p_9$: même comportement
-%\% à $Pr_2$ et $R_2$;
-%\item
-%$t_g$ et $t_h$, avec  $p_6$, $p_7$ et $p_9$: séquence
-%d'événements début de proc. de $Pr_2$ \mbox{et fin.}
-%\end{itemize} 
-
-%\begin{columns}
-%\column{.6\textwidth}
-
-%\vspace{.07cm} {\color{blue} Invariants de transition \\
-%(pour $M_0 = p_1p_8p_9$) :}
-%\vspace{.1cm}
-%\begin{itemize}
-%\item $s_1=t_at_bt_c$, $s_2=t_dt_et_f$ et $s_3=t_gt_h$ :\\
-% les seules séquences effectivement tirables !
-%\end{itemize} 
- 
-%\column{.4\textwidth}
-%\begin{center}
-%\includegraphics[width=4.8cm]{./figSH/rea1}
-%\end{columns}
-
-% \end{frame}
-
-% \subsubsection{Analyse des propriétés}
- 
-%   \begin{frame}
-% \frametitle{Analyse des propriétés}
-%\begin{description}
-%\item[Analyse par énumération de marquages]
-%le graphe de marquages accessibles est calculé, vérifiant si le réseau est borné, vivant et reinitialisable.
-% \pause
-%\item[Analyse structurelle]
-%calcul des composantes conservatives et répétitives stationnaires et des
-%invariants correspondants.
-%Ne permet pas toujours d'avoir une réponse, mais dans certains cas, permet d'obtenir une réponse simples et rapide des propriétés du réseau.
-%   \pause
-%\item[Analyse par réduction]
-%si le réseau est trop grand ou non borné, on peut réduire la taille du réseau,
-%en utilisant certaines règles de réduction.
-%\end{description}  
-%  \end{frame}
- 
-%  \begin{frame}
-% \frametitle{Analyse par énumération des marquages}
-% {\color{blue}Arbre de couverture}
- 
-% \vspace{.2cm}
-%\begin{itemize}
-%\item
-%on part du marquage initial  $M_0$,
-%\item chaque transition sensibilisée par $M_0$  donne origine à une branche,
-% \pause
-%\item la construction d'une branche est interrompue quand on rencontre un marquage 
-%\begin{itemize}
-%\item
-%déjà calculé et pour lequel tous les successeurs ont été déjà 
-%calculés ou seront calculés (branche pendante à être explorée) :
-%\item
-%strictement supérieur à un marquage
-%{\em de la branche qui est en train d'être explorée}
-%(le réseau peut être non borné) $\rightarrow M(p)=\omega$.
-%\end{itemize}  
-%\end{itemize}  
-%Si le réseau est non borné, l'arbre est fini dû à l'introduction du symbole $\omega$.
-% \end{frame}  
- 
-%   \begin{frame}
-% \frametitle{Analyse par énumération des marquages}
-%  {\color{blue} Recherche des propriétés d'un réseau $N=<\!{\cal R},M\!>$ \\
-%  sur le graphe ${\cal A(R},M)$}
-  
-%   \vspace{.2cm}
-%\begin{itemize}
-%\item réseau $k$-borné : graphe ${\cal A(R},M)$  est borné,
-% \pause
-%\item réseau réinitialisable :  graphe fortement connexe:
-%$ \forall M_i,M_j \in {\cal A(R},M),~ \exists s \mid M_i
-%\stackrel{s}{\rightarrow} M_j$ (existe un chemin entre n'importe quelle paire de noeuds),
-% \pause
-%\item
-%réseau vivant :  graphe fortement connexe et toutes les transitions étiquetent au moins un des arcs :
-%$ \forall t  \in T ~\exists M_i,~\exists M_j \in {\cal A(R},M),~ \mid M_i
-%\stackrel{t}{\rightarrow} M_j.$
-
-%\end{itemize}  
-
-% \end{frame}  
- 
-%   \begin{frame}
-%  \frametitle{Analyse par énumération des marquages}
-%  {\color{blue}Pas pour l'analyse}
-
-%\begin{enumerate}
-%\item
-%vérifier si le réseau marqué est borné (arbre
-% de couverture) ;
-%\item
-%si le réseau marqué est borné, construire le graphe de marquages accessibles ;
-%\item
-%montrer que ce graphe est fortement connexe ;
-%\item
-%vérifier que chaque transition apparaît au moins une fois comme étiquette d'un arc du graphe de marquages accessibles.
-%\end{enumerate}
-
-%\noindent
-%$\leadsto$ vérifier si le réseau {\color{blue} marqué} est en même temps
-%borné, reinitialisable et vivant.
-
-%\begin{center}
-%\includegraphics[width=5.6cm]{./figSH/qviva-g}
-%\end{center}
-% \end{frame}  
- 
- 
-
-%  \begin{frame}
-% \frametitle{Analyse  des propriétés  structurelles}
- 
-%   {\color{blue}Réseau non marqué : composantes conservatives}
-
-%\begin{itemize}
-%\item
-%toute place qui  {\color{blue}appartient} à une composante conservative  {\color{blue}est} bornée ;
-%\item
-%une place $p$ qui {\color{blue} n'appartient} à aucune composante conservative
-%($f(p)=0$)  {\color{blue}peut} être bornée ;
-%\item
-%une place non bornée n'appartient à aucune  composante conservative
-%\end{itemize}
-
-% Un réseau de Petri pour
-%lequel il existe une couverture de composantes 
-%conservatives $f^T>0$ est
-%k-borné, {\it peu importe son marquage initial.}
-
-% \pause
-%\vspace{.4cm}  
-%\noindent
-% {\color{blue} Réseau marqué : invariants de place}
-
-%$f^TM = f^TM_0$ permet de calculer une limite pour  {\color{blue}chaque} place $p$:
-%
-%\vspace{.3cm}  
-%\begin{center}
-%\fbox{\rule[-.5cm]{0cm}{1cm}
-%$f(p) M(p) \leq f^T M_0,~~M(p) \leq \frac{f^TM_0}{f(p)}$}  
-%\end{center}
-%    \end{frame}  
-    
-%      \begin{frame}
-% \frametitle{Analyse  des propriétés  structurelles}
- 
-%   {\color{blue}Réseau non marqué : composantes répétitives}
-
-%\vspace{.3cm}  
-%Réseau de Petri répétitif : réseau  pour
-%lequel il existe une couverture de composantes 
-%répétitives $s>0$ 
-%\begin{itemize}
-% \pause
-%\item
-%un réseau de Petri borné et vivant   {\color{blue}est} répétitif \\
-%(la réciproque n'est pas vraie)
-%
-% \pause
-%\item un réseau répétitif ($\forall t, ~s(t) > 0$) peut être non vivant
-%(une transition  qui  {\color{blue}appartient} à une composante répétitive  {\color{blue}n'est pas} forcement vivante)
-% \pause
-%\item si le réseau est non répétitif ($\exists t, ~s(t) =0$), le réseau est non vivant  {\color{blue}ou} non borné (une transition  qui {\color{blue} n'appartient pas} à une composante répétitive  est non vivante {\color{blue}ou} amène à un marquage non borné)
-% \pause
-%\item
-%une transition non vivante peut donc appartenir à une  composante répétitive...
-%\end{itemize}
-
-
-%\end{frame}  
+\begin{frame}{Analyse structurelle}
+\begin{block}{Composantes répétitives}
+Réseau de Petri répétitif : il existe une couverture de composantes répétitives ($s>0$)
+	\begin{itemize}
+	\item un réseau de Petri \structure{borné et vivant} est \structure{répétitif}
+	\item un réseau \structure{non répétitif} ($\exists t, \, s(t)=0$) est \structure{non vivant ou non borné}
+	\end{itemize}
+\end{block}
+\end{frame}  
    
-% \begin{frame}
-% \frametitle{Exemples}
+\begin{frame}{Exemples}
+\begin{center}
+	\includegraphics[width=3cm]{exemplea} 
+\end{center}
+\end{frame}      
 
-% \begin{columns}
-%\column{.56\textwidth}
- 
-% Réseau borné et réinitialisable (pour $M_o=p_1$) mais $t_3$ non vivante 
- 
-%      \includegraphics[width=3cm]{./figSH/exemplea} 
-      
-%      \vspace{.3cm}
-      
-       
-%      \column{.56\textwidth}
-%       Réseau non vivant mais toutes les transitions appartienent à une  composante répétitive
-%       \\
-%  \includegraphics[width=3.4cm]{./figSH/blocage1_ndr}
-%     \end{columns} 
-%     \end{frame}      
- 
- 
-% \subsubsection{Caractéristiques : modularité, composition, calculabilité}
- 
-%   \begin{frame}
-% \frametitle{Caractéristiques de la représentation par RdP}
-% \begin{itemize}
-%\item  {\color{blue}Modularité} : est-il possible de décomposer un système complexe?
-%\item  {\color{blue}Composition} : si les modules ont les bonnes propriétés, la composition de ces modules garde-t-elle les bonnes propriétés? Ou est-il nécessaire d'analyser le système globale (composé)?
-%\item  {\color{blue}Calculabilité} : existe-t-il des algorithmes pour l'analyse? %Et pour l'exécution? (???)
-%\end{itemize}
+%%%%% COMPOSITION %%%%%
+\section{Composition}
+\begin{frame}{Caractéristiques de la représentation par RdP}
+\begin{itemize}
+\item  {\color{blue}Modularité} : est-il possible de décomposer un système complexe?
+\item  {\color{blue}Composition} : si les modules ont les bonnes propriétés, la composition de ces modules garde-t-elle les bonnes propriétés? Ou est-il nécessaire d'analyser le système globale (composé)?
+\item  {\color{blue}Calculabilité} : existe-t-il des algorithmes pour l'analyse?
+\end{itemize}
+{\color{blue} Bloc bien-formé}  ({\it module})   \\ 
+un réseau de Petri avec :
+\begin{itemize}
+\item une transition d'entrée $t_e$ et une transition de sortie $t_s$,
+\item réseau borné, vivant et réinitialisable si l'on rajoute une place $p$ tel que $Pre(p,t_e)=Post(p,t_s)=1$. \\
+Ex: séquence, if-then-else, do-while, fork-join.
+\end{itemize}
+\end{frame}
 
-% \vspace{.2cm}
-% {\color{blue} Bloc bien-formé}  ({\it module})   \\ 
-% un réseau de Petri avec :
-% \begin{itemize}
-%\item une transition d'entrée $t_e$ et une transition de sortie $t_s$,
-%\item réseau borné, vivant et réinitialisable si l'on rajoute une place $p$ tel que $Pre(p,t_e)=Post(p,t_s)=1$. \\
-%Ex: séquence, if-then-else, do-while, fork-join.
-%\end{itemize}
-
-%   \end{frame}
- 
 %  \begin{frame}
 % \frametitle{Raffinement}
  
