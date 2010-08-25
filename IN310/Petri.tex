@@ -182,6 +182,38 @@
 \end{block}
 \end{frame}
 
+\begin{frame}{Règle de fonctionnement}
+\begin{block}{Transition sensibilisée à partir de M}
+	\begin{itemize}
+	\item il y a un numéro suffisant de jetons dans les places d'entrée,
+	\item $\forall p \in P, \;\;  M(p) \geq Pre(p, t)$
+	\item $M \geq Pre(\, . \, ,t)$
+	\end{itemize}
+\end{block}
+\begin{block}{Tir d'une transition à partir de M}
+	\begin{itemize}
+	\item $\forall p \in P, \;\; M'(p)=M(p)-Pre(p,t)+Post(p,t)$
+	\item $M'=M-Pre(\, . \, ,t)+Post(\, . \, ,t)=M + C(\, . \, ,t)$
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Règle de fonctionnement}
+\begin{columns}
+	\begin{column}{.6\linewidth}
+		\begin{itemize}
+		\item  Enlève $Pre(p,t)$ jetons de chaque place précédente $p$ (poids de l'arc d'entrée), et met $Post(p,t)$ jetons à chaque place de sortie $p$,
+		\item  Représente le changement d'état dû à l'ocurrence de l'événement associé à $t$.
+		\end{itemize}
+	\end{column}
+	\begin{column}{.4\linewidth}
+		\begin{center}
+		\includegraphics[width=\linewidth]{le}
+		\end{center}
+	\end{column}
+\end{columns}
+\end{frame}
+
 \subsection{Structures}
 \begin{frame}{Différentes interactions entre les processus}
 \begin{block}{Séquence}
@@ -233,7 +265,7 @@
 	\end{column}
 	\begin{column}{.7\linewidth}
 		\begin{itemize}
-		\item évolution indépendante de $t_1$ et $t_2$ (évolution assynchrone),
+		\item évolution indépendante de $t_1$ et $t_2$ (évolution asynchrone),
 		\item synchronisme en $t_3$.
 		\end{itemize}
 	\end{column}
@@ -311,38 +343,6 @@ stocké dans le {\it buffer} $B_1$ ou $B_2$ (respectivement).
 \end{frame}
  
 \subsection{Modèle dynamique}
-\begin{frame}{Règle de fonctionnement}
-\begin{block}{Transition sensibilisée à partir de M}
-	\begin{itemize}
-	\item il y a un numéro suffisant de jetons dans les places d'entrée,
-	\item $\forall p \in P, \;\;  M(p) \geq Pre(p, t)$
-	\item $M \geq Pre(\, . \, ,t)$
-	\end{itemize}
-\end{block}
-\begin{block}{Tir d'une transition à partir de M}
-	\begin{itemize}
-	\item $\forall p \in P, \;\; M'(p)=M(p)-Pre(p,t)+Post(p,t)$
-	\item $M'=M-Pre(\, . \, ,t)+Post(\, . \, ,t)=M + C(\, . \, ,t)$
-	\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}{Règle de fonctionnement}
-\begin{columns}
-	\begin{column}{.6\linewidth}
-		\begin{itemize}
-		\item  Enlève $Pre(p,t)$ jetons de chaque place précédente $p$ (poids de l'arc d'entrée), et met $Post(p,t)$ jetons à chaque place de sortie $p$,
-		\item  Représente le changement d'état dû à l'ocurrence de l'événement associé à $t$.
-		\end{itemize}
-	\end{column}
-	\begin{column}{.4\linewidth}
-		\begin{center}
-		\includegraphics[width=\linewidth]{le}
-		\end{center}
-	\end{column}
-\end{columns}
-\end{frame}
-
 \begin{frame}{Conflit et parallélisme}
 \begin{itemize}
 \item \structure{Conflit structurel :} ssi  $t_1$ et $t_2$ ont au moins une place d'entrée en commun
@@ -387,28 +387,28 @@ M_0 & & M_1 & & M_2 & & M_1
 \end{itemize}
 \end{frame}
  
-\subsection{Autres représentations}
-\begin{frame}{Système de règles}
-\begin{itemize}
-\item une base de faits, représentant la connaissance disponible sur le système,
-\item une base de règles, qui permet de déduire de nouveaux faits,
-\item un {\em moteur d'inférence}, qui permet de
-réaliser de nouvelles déductions, appliquant les règles aux faits.
-\end{itemize}
-\end{frame}
+%\subsection{Autres représentations}
+%\begin{frame}{Système de règles}
+%\begin{itemize}
+%\item une base de faits, représentant la connaissance disponible sur le système,
+%\item une base de règles, qui permet de déduire de nouveaux faits,
+%\item un {\em moteur d'inférence}, qui permet de
+%réaliser de nouvelles déductions, appliquant les règles aux faits.
+%\end{itemize}
+%\end{frame}
 
-\begin{frame}{Grammaire}
-\begin{itemize}
-\item un alphabet $\Pi$ dont les symboles sont les places $p \in P$
-\item un ensemble $Q$ de règles de réécriture :
-$$t: \mu(Pre(.,t)) \rightarrow \mu(Post(.,t))$$
-\item $\mu: \mathcal{M} \rightarrow {\Pi}^*$, $\mathcal{M}$ l'ensemble de tous les marquages et ${\Pi}^*$ l'ensemble des séquences finies (dont la séquence vide $\lambda$)
-\item transition sensibilisée : 
-$$\mu(Pre(.,t)) \subseteq \mu(M)$$
-\item tir de transition : 
-$$\mu(M')=\mu(M) \cup \mu(Post(.,t)) \setminus \mu(Pre(.,t))$$
-\end{itemize}
-\end{frame}
+%\begin{frame}{Grammaire}
+%\begin{itemize}
+%\item un alphabet $\Pi$ dont les symboles sont les places $p \in P$
+%\item un ensemble $Q$ de règles de réécriture :
+%$$t: \mu(Pre(.,t)) \rightarrow \mu(Post(.,t))$$
+%\item $\mu: \mathcal{M} \rightarrow {\Pi}^*$, $\mathcal{M}$ l'ensemble de tous les marquages et ${\Pi}^*$ l'ensemble des séquences finies (dont la séquence vide $\lambda$)
+%\item transition sensibilisée : 
+%$$\mu(Pre(.,t)) \subseteq \mu(M)$$
+%\item tir de transition : 
+%$$\mu(M')=\mu(M) \cup \mu(Post(.,t)) \setminus \mu(Pre(.,t))$$
+%\end{itemize}
+%\end{frame}
 
 %%%%% PROPRIETES %%%%%
 \section{Analyse de propriétés}
@@ -674,294 +674,203 @@ Réseau de Petri répétitif : il existe une couverture de composantes répétit
 \end{frame}      
 
 %%%%% COMPOSITION %%%%%
-\section{Composition}
+\section{Composition}\subsection{Composition}
 \begin{frame}{Caractéristiques de la représentation par RdP}
 \begin{itemize}
-\item  {\color{blue}Modularité} : est-il possible de décomposer un système complexe?
-\item  {\color{blue}Composition} : si les modules ont les bonnes propriétés, la composition de ces modules garde-t-elle les bonnes propriétés? Ou est-il nécessaire d'analyser le système globale (composé)?
-\item  {\color{blue}Calculabilité} : existe-t-il des algorithmes pour l'analyse?
+\item \structure{Modularité} : est-il possible de décomposer un système complexe?
+\item \structure{Composition} : si les modules ont les bonnes propriétés, la composition de ces modules garde-t-elle les bonnes propriétés? Ou est-il nécessaire d'analyser le système globale (composé)?
+\item \structure{Calculabilité} : existe-t-il des algorithmes pour l'analyse?
 \end{itemize}
-{\color{blue} Bloc bien-formé}  ({\it module})   \\ 
-un réseau de Petri avec :
+\begin{block}{Bloc bien-formé}
+	un réseau de Petri avec :
+	\begin{itemize}
+	\item une transition d'entrée $t_e$ et une transition de sortie $t_s$,
+	\item réseau borné, vivant et réinitialisable si l'on rajoute une place $p$ tel que $Pre(p,t_e)=Post(p,t_s)=1$. \\
+	Ex: séquence, if-then-else, do-while, fork-join.
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Raffinement}
+Processus d'abstraction fait en deux temps :
 \begin{itemize}
-\item une transition d'entrée $t_e$ et une transition de sortie $t_s$,
-\item réseau borné, vivant et réinitialisable si l'on rajoute une place $p$ tel que $Pre(p,t_e)=Post(p,t_s)=1$. \\
-Ex: séquence, if-then-else, do-while, fork-join.
+\item modélisation d'une  première ébauche ({\it vision abstraite du système global}), avec des transitions {\it abrégées} (associées à des tâches complexes),
+\item à partir de ce RdP, remplacer les transitions {\it abrégées} par des \structure{blocs bien-formés} représentant une vision détaillée de ces tâches complexes
+\item conception {\it top-down}
+\item analyse : si le réseau abstrait est un bloc bien formé, et les transitions sont représentées par des blocs bien formés, alors le réseau global est bien formé.
+\end{itemize} 
+\end{frame}
+
+\begin{frame}{Composition}
+Processus "à objets" :
+\begin{itemize}
+\item modélisation \structure{détaillée} de deux objets dès le départ
+\item construction du réseau global à partir de la composition de ces objets
+	\begin{itemize}
+	\item Composition \structure{asynchrone} (fusion des places)
+	\item Composition \structure{synchrone} (fusion des transitions)
+	\end{itemize}
+\item conception {\it bottom-up}
+\item analyse : le réseau global composé ne conserve pas forcement les propriétés de chaque bloc
+\end{itemize}
+\end{frame}
+  
+\begin{frame}{Composition synchrone}
+Fusion des transitions $t_1$ et $t_3$ ($t_{13}$) et de $t_2$ et $t_4$ ($t_{24}$)
+\begin{center}
+\includegraphics[width=.8\linewidth]{compoa}
+\end{center}
+\end{frame}
+
+\begin{frame}{Composition asynchrone}
+Fusion des places $p_2$ et $p_7$ ($p_{27}$)
+\begin{columns}
+\begin{column}{.5\linewidth}
+	\centering
+	\includegraphics[width=\linewidth]{exempleb}
+\end{column}
+\begin{column}{.5\linewidth}
+	\centering
+	\includegraphics[width=\linewidth]{exemplec}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Communication par place}
+Deux processus $A$ et $B$ exécutant chacun une opération doivent se communiquer :
+\begin{itemize}
+\item $A$ ne peut commencer qu'après la fin de $B$ ;
+\item $B$ doit attendre que $A$ commence pour pourvoir commencer.
+\end{itemize}
+\begin{columns}
+\column{.27\textwidth}
+	\includegraphics[width=3.2cm]{comp2Seul_ndr}\\
+	processus indépendants \pause
+\column{.35\textwidth}
+	\includegraphics[width=4.4cm]{compSep_ndr} \\
+	modèle local\pause
+\column{.3\textwidth}
+	\includegraphics[width=3.5cm]{comp3_ndr}\\
+	modèle global
+\end{columns}
+\end{frame}
+
+%\begin{frame}{Retour aux RdP : composition synchrone}
+%{\footnotesize À partir des RdP représentant les philosophes (P et Q) et les baguettes (1 et 2), construire le RdP du système global (partage des baguettes par les 2 philosophes) en utilisant la composition synchrone (fusion des transitions avec le même nom ou correspondant au même événement)}
+%\begin{columns}
+%\column{.5\textwidth}  
+%	{\scriptsize \hspace{1cm}P \hspace{3cm}Q~~~}\\
+%	\includegraphics[width=3cm]{philP_ndr}
+%	\includegraphics[width=3.2cm]{philQ_ndr}  % PQ
+%\pause
+%\column{.5\textwidth}
+%	{\scriptsize \hspace{1cm}b1 \hspace{2.2cm}b2~~~}\\
+%	\includegraphics[width=2.5cm]{baguette1_ndr} 
+%	\includegraphics[width=2.5cm]{baguette2_ndr} \\
+%	{\scriptsize Fusion de $t$ de $R_1$ avec  $t$ de $R_2$ : $t_{12}$\\
+%	\begin{itemize}
+%	\item soit $p \in R_1$ et $q \in R_2$ ; $r \in R_{12}$
+%	\item Pre$(r,t_{12})$=Pre$(p,t_1)$ et Pre$(q,t_2)$
+%	\item Post$(r,t_{12})$=Post$(p,t_1)$ et Post$(q,t_2)$
+%	\end{itemize}
+%	}
+%\end{columns}
+%\end{frame}
+
+%\begin{frame}{Retour aux RdP : composition synchrone}
+%\begin{columns}
+%\column{.6\textwidth}
+%	{\footnotesize RdP global PQb1b2 obtenu par composition synchrone de P, Q, b1 et b2}
+%	\includegraphics[width=7cm]{PQb1b2_ndr}
+%\column{.4\textwidth}
+%	{\footnotesize Graphe de marquage du RdP PQb1b2 = automate pg~60}\\%\pageref{phil_aut}
+%	\includegraphics[width=4cm]{PQb1b2_aut}
+%\end{columns}
+%\end{frame}
+
+%%% TEMPOREL %%%
+\section{Réseau de Petri et le temps}\subsection{Introduction}
+\begin{frame}{Réseau de Petri et le temps}
+Plusieurs extensions de RdP pour prendre en compte le temps :
+\begin{itemize}
+\item temps associé aux arcs,
+\item temps associé aux places,
+\item temps associé aux transitions (RdP temporel, RdP temporisé)
+\end{itemize}
+\begin{block}{Réseaux de Petri temporels (Merlin, 1974)}
+	\begin{center}
+	\includegraphics[width=.3\linewidth]{rdp_s_forte}
+	\end{center}
+\end{block}
+\end{frame}
+ 
+\subsection{RdP $t$-temporels}
+\begin{frame}{Réseaux de Petri t-temporels}
+Un réseau de Petri t-temporel $<N, M_0, I>$ est défini par~:
+\begin{itemize}
+\item un réseau de Petri \mbox{$N = <P,T,Pre, Post>$},
+\item un marquage initial $M_0$,
+\item une fonction intervalle statique $I$ :
+	$$I: T \rightarrow (Q^+ \cup 0) \times (Q^+ \cup \infty)$$
+\end{itemize}
+\vspace{.2cm}
+Protocole unidirectionnel de transfert de données :
+\begin{center}
+\includegraphics[width=.8\linewidth]{rdp_exo}
+\end{center}
+\end{frame}
+
+\begin{frame}{Réseaux de Petri t-temporels}
+Intervalle temporel $I(t_i)=[a_i,b_i]$ : dates de tir possibles de $t_i$ à partir de sa date de
+sensibilisation.
+\begin{center}
+\includegraphics[width=.8\linewidth]{rdp_exo}
+\end{center}
+\begin{itemize}
+\item date de \structure{sensibilisation} d'une transition $t_i$
+\item date de \structure{début} et de \structure{fin} de l'intervalle de tir,
+\item date de \structure{franchissement} effectif de $t_i$.
 \end{itemize}
 \end{frame}
 
-%  \begin{frame}
-% \frametitle{Raffinement}
- 
-%Processus d'abstraction fait en deux temps :
-
-% \vspace{.2cm}
-% \begin{itemize}
-%\item modélisation d'une  première ébauche ({\it vision abstraite du système global}), avec des transitions {\it abrégées} (associées à des tâches complexes),
-%\item à partir de ce RdP, remplacer les  transitions {\it abrégées} par  des  {\color{blue} blocs bien-formés} représentant une vision détaillée de ces tâches complexes
-%\item conception {\it top-down}
-%\item analyse : si le réseau abstrait est un bloc bien formé, et les transitions sont représentées par des blocs bien formés, alors le réseau global est bien formé.
-%\end{itemize} 
-% \end{frame}
-%
- 
-%  \begin{frame}
-% \frametitle{Composition}
-  
-%  Processus "à objets" :
-%  \begin{itemize}
-%\item modélisation  {\color{blue} détaillée} de deux objets dès le départ
-%\item construction du réseau global à partir de la composition de ces objets
-%  \begin{itemize}
-%  \item Composition {\color{blue} asynchrone} (fusion des places)
-% \item Composition {\color{blue} synchrone} (fusion des transitions)
-% \end{itemize}
-
-%\item conception {\it botton-up}
-%\item analyse : le réseau global composé ne conserve pas forcement les propriétés de chaque bloc
-%\end{itemize}
-
-
-%  \end{frame}
-  
-% \begin{frame}
-% \frametitle{Composition}
-%  \begin{small}
-  
-%   \begin{columns}
-%\column{.3\textwidth}
-% {\color{blue} \bf Composition synchrone} 
- 
-%  Fusion des transitions $t_1$ et $t_3$ ($t_{13}$) et de\\
-%  $t_2$ et $t_4$ ($t_{24}$).
-  
-%   \vspace{.2cm}
-%  \includegraphics[width=4cm]{./figSH/compoa} 
-  
-%  \pause
-%   \column{.7\textwidth}
-%      {\color{blue} \bf Composition asynchrone} : \\
-%      Fusion des places $p_2$ et $p_7$ ($p_{27}$).
-  
-  
-% \includegraphics[width=5cm]{./figSH/exempleb}  
-%\includegraphics[width=5cm]{./figSH/exemplec} 
-%   \end{columns}
-%   \end{small}
-% \end{frame}
-
-
-
-%  \begin{frame}
-% \frametitle{Communication par place}
-%Deux processus $A$ et $B$ exécutant chacun une opération doivent se communiquer :\\
-%$\bullet$ $A$ ne peut commencer qu'après la fin de $B$ ;\\
-%$\bullet$ $B$ doit attendre que $A$ commence pour pourvoir commencer.\\
-
-%  \begin{small}  \begin{columns}
-%\column{.27\textwidth}
-%\includegraphics[width=3.2cm]{./figSH/comp2Seul_ndr}\\
-%si les processus étaient indépendants \pause
-%\column{.35\textwidth}
-% \includegraphics[width=4.4cm]{./figSH/compSep_ndr} \\
-% modèle local avec communication\pause
-% \column{.3\textwidth}
-%    \includegraphics[width=3.5cm]{./figSH/comp3_ndr}\\
-%    modèle global avec fusion de places
-%   \end{columns}
-%     \end{small}
-%      \end{frame}
-
- 
-%  \begin{frame}
-% \frametitle{Tina toolbox}
-% 
-% \begin{small}
-% Tina is a toolbox for the edition and analysis of Petri Nets and Time Petri Nets, developed in the OLC group of LAAS/CNRS.
-% \begin{itemize}
-%\item ouvrir une fenêtre de commandes en ligne ; taper "nd" (NetDraw)
-%\item faire Help, Setup (5eme ascenceur): indiquer le nombre de boutons de la souris
-%\item faire Help, Help : comment créer les  places, les transitions, les arcs, comment changer les propriétés d'une place (marquage, label), d'un arc (poids), d'une transition (label). Comment déplacer, effacer les éléments...
-%\item éditer le RdP des lecteurs écrivains
-%\item générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "lts(.aut)".
-%\item dessiner ce graphe : click droit, "open file in nd" ; edit/draw ; déplacer les noeuds pour que le graphe soit lisible, et "séparer" les doubles flèches
-%\item générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "verbose".
-%\end{itemize}
-% \end{small}
-% \end{frame}
-%  \begin{frame}
-% \frametitle{Retour aux RdP : composition synchrone}
-% {\footnotesize À partir des RdP représentant les philosophes (P et Q) et les baguettes (1 et 2), construire le RdP du système global (partage des baguettes par les 2 philosophes) en utilisant la composition synchrone (fusion des transitions avec le même nom ou correspondant au même événement)}
- 
-% \begin{columns}
-%\column{.5\textwidth}  
-%\pause
-%{\scriptsize \hspace{1cm}P \hspace{3cm}Q~~~}\\
-%\includegraphics[width=3cm]{figSH/philP_ndr}
-%    \includegraphics[width=3.2cm]{figSH/philQ_ndr}  % PQ
-%    \column{.5\textwidth}
-%    \pause
-%    {\scriptsize \hspace{1cm}b1 \hspace{2.2cm}b2~~~}\\
-%      \includegraphics[width=2.5cm]{figSH/baguette1_ndr} 
-%           \includegraphics[width=2.5cm]{figSH/baguette2_ndr} \\
-% {\scriptsize           Fusion de $t$ de $R_1$ avec  $t$ de $R_2$ : $t_{12}$\\
-% \begin{itemize}
-% \item soit $p \in R_1$ et $q \in R_2$ ; $r \in R_{12}$
-%\item Pre$(r,t_{12})$=Pre$(p,t_1)$ et Pre$(q,t_2)$
-%\item Post$(r,t_{12})$=Post$(p,t_1)$ et Post$(q,t_2)$
-%\end{itemize}
-%}
-%           \end{columns}
-% \end{frame}
-
-%  \begin{frame}
-% \frametitle{Retour aux RdP : composition synchrone}
-% \begin{columns}
-%\column{.6\textwidth}
-% {\footnotesize RdP global PQb1b2 obtenu par composition synchrone de P, Q, b1 et b2}
-%  \includegraphics[width=7cm]{figSH/PQb1b2_ndr}
-%\column{.4\textwidth}
-% {\footnotesize Graphe de marquage du RdP PQb1b2 = automate pg~60}\\%\pageref{phil_aut}
-%  \includegraphics[width=4cm]{figSH/PQb1b2_aut}
-%\end{columns}
-% \end{frame}
-%\subsection{Réseau de Petri et le temps}
-% \begin{frame}
-% \frametitle{Réseau de Petri et le temps}
- 
-% Plusieurs extensions de RdP pour prendre en compte le temps :
-% \begin{itemize}
-%\item temps  associé aux arcs,
-%\item temps associé aux places,
-%\item temps associé aux transitions (RdP temporel, RdP temporisé)
-%\end{itemize}
-
-%\vspace{.5cm}
-%Réseaux de Petri temporels (Merlin, 1974)
-%\includegraphics[width=4cm]{figCharles/rdp_s_entre}~~\includegraphics[width=4cm]{figCharles/rdp_s_forte}
-% \end{frame}
- 
- 
-% \begin{frame}
-%\frametitle{Réseaux de Petri t-temporels ~1/3}
-
-%\only<1>{\vspace{1ex}Un réseau de Petri t-temporel $<N, M_0, I>$
-%est défini par~:
-%\begin{itemize}
-%    \item un réseau de Petri \mbox{$N = <P,T,Pre, Post>$},
-%    \item un marquage initial $M_0$,
-%    \item  une fonction intervalle statique $I$ :
-%    \mbox{$T \rightarrow (Q^+ \cup 0) * (Q^+ \cup \infty)$}.
-%\end{itemize}}
-
-%\vspace{1ex}
-
-%Protocole unidirectionnel de transfert de données : \vspace{1ex}
-%\begin{figure}[h]
-%\centerline{\includegraphics[width=12cm]{figCharles/rdp_exo}}
-%\end{figure}
-
-%\end{frame}
-
-%-------------------------------------------------------------------------%
-%\begin{frame}
-%\frametitle{Réseaux de Petri t-temporels ~2/3}
-
-%Intervalle temporel $I(t_i)=[a_i,b_i]$ : \small {ensemble des
-%dates de tir possibles de $t_i$ à partir de sa date de
-%sensibilisation.}
-
-%\vspace{-1ex}
-%\begin{figure}[h]
-%\centerline{\includegraphics[width=12cm]{figCharles/rdp_exo}}% fig en français
-%\end{figure}
-
-%\vspace{-4ex}
-%\only{~~~~Les événements à considérer : \small {
-%\begin{itemize}
-%\item {la date de
-%\emph{\textcolor[rgb]{0.00,0.00,1.00}{sensibilisation}} d'une
-%transition $t_i$}
-
-%\pause
-%\item {la date de \emph{\textcolor[rgb]{0.00,0.00,1.00}{début}} et  la
-%date de \emph{\textcolor[rgb]{0.00,0.00,1.00}{fin}} de
-%l'intervalle de tir,}
-
-%\pause
-%\item {la date de
-%\emph{\textcolor[rgb]{0.00,0.00,1.00}{franchissement}} effectif de
-%$t_i$.}
-%\end{itemize}
-%}}
-
-%\end{frame}
-
-%-----Sémantique d'entrelancement-----------------------------------------------%
-
-%\begin{frame}
-
-%\frametitle{Sémantique}
-
+%\begin{frame}{Sémantique}
 %\begin{columns}
 %\column{.05\textwidth}\column{.65\textwidth}
-
-%{\tt \bf Sémantique d'entrelacement :}\\
-
-%\begin{small}
-%\vspace{1ex} $\bullet$ ~transitions sensibilisées en parallèle, \\
-%mais franchies \textcolor[rgb]{0.00,0.00,1.00}{séquentiellement} \\
-%(serveur unique  + durée de franchissement nulle);\\
-
-%\vspace{1ex}
-
-%$\bullet$ ~au lieu $t_1 \| t_2$, on considère \\
-%~~~~~~~~~~~$t_1 \, ; \, t_2$ ou $t_2 \, ; \, t_1$.
-%\end{small}
+%	{\tt \bf Sémantique d'entrelacement :}\\
+%	\begin{small}
+%	$\bullet$ ~transitions sensibilisées en parallèle, \\
+%	mais franchies \textcolor[rgb]{0.00,0.00,1.00}{séquentiellement} \\
+%	(serveur unique  + durée de franchissement nulle);\\
+%	$\bullet$ ~au lieu $t_1 \| t_2$, on considère \\
+%	~~~~~~~~~~~$t_1 \, ; \, t_2$ ou $t_2 \, ; \, t_1$.
+%	\end{small}
 %\column{.35\textwidth}
-%\centerline{\includegraphics[width=3.5cm]{figCharles/rdp_s_entre}}
+%	\centerline{\includegraphics[width=3.5cm]{rdp_s_entre}}
 %\end{columns}
-
 %\pause
 %\begin{columns}
-
 %\column{.35\textwidth}
-
-%\centerline{\includegraphics[width=3.5cm]{figCharles/rdp_s_forte}}
+%	\centerline{\includegraphics[width=3.5cm]{rdp_s_forte}}
 %\column{.05\textwidth}\column{.65\textwidth}
-
-%\vspace{2ex}
-%{\tt \bf Sémantique forte :}\\
-
-%\vspace{1ex}
-%\begin{small}
-%$\bullet$ ~si plusieurs transitions franchissables
-%$I(t_i)=[a_i,b_i]$: franchir l'une d'elles avant la
-%\textcolor[rgb]{0.00,0.00,1.00}{fin} de l'intervalle de tir des
-%autres transitions.
-
-%\vspace{1ex}
-%\pause
-%$\bullet$ ~tir de $t_1$ avant $t_2$ ($b_2=$
-%$\textcolor[rgb]{1.00,0.00,0.00}{4}$)
-%$\rightarrow$ donc, $t_1 ~[1~3]$.
-
-%\vspace{1ex}
-%\pause
-%\only<2>{ 
-%$\bullet$ ~tir $t_2$ avant $t_1$ ($b_1=$
-%$\textcolor[rgb]{1.00,0.00,0.00}{3}$)
-%$\rightarrow$ donc, $t_2$ $[2
-%\textcolor[rgb]{1.00,0.00,0.00}{~3]}$.%}
-
-%\end{small}
-
-
-
+%	{\tt \bf Sémantique forte :}\\
+%	\begin{small}
+%	$\bullet$ ~si plusieurs transitions franchissables
+%	$I(t_i)=[a_i,b_i]$: franchir l'une d'elles avant la
+%	\textcolor[rgb]{0.00,0.00,1.00}{fin} de l'intervalle de tir des
+%	autres transitions.
+%	\pause
+%	$\bullet$ ~tir de $t_1$ avant $t_2$ ($b_2=$
+%	$\textcolor[rgb]{1.00,0.00,0.00}{4}$)
+%	$\rightarrow$ donc, $t_1 ~[1~3]$.
+%	\pause
+%	\only<2>{ 
+%	$\bullet$ ~tir $t_2$ avant $t_1$ ($b_1=$
+%	$\textcolor[rgb]{1.00,0.00,0.00}{3}$)
+%	$\rightarrow$ donc, $t_2$ $[2
+%	\textcolor[rgb]{1.00,0.00,0.00}{~3]}$.%}
+%	\end{small}
 %\end{columns}
-
 %\end{frame}
-
 
 %------------------
 %\subsection{Réseaux de contraintes temporelles}
@@ -1335,5 +1244,21 @@ Ex: séquence, if-then-else, do-while, fork-join.
 % {\scriptsize Intervalle de tir $D^j(t_i)$ de $t_i$ à partir de $C_j$ :\\
 %$D^0(t_1)=[4,6]$, $D^1(t_2)=[2,3]$, $D^2(t_3)=[0,0]$, $D^4(t_2)=[2.3]$, $D^4(t_5)=[0,3]$, $D^5(t_4)=D^5(t_5)=[0,0]$, $D^3(t_1)=[1,4]$, $D^3(t_5)=[0,4]$, $D^6(t_2)=[1,3]$, $D^7(t_1)=[0,4]$ }% fin script
 % \end{frame} 
+
+
+%\begin{frame}{Tina toolbox}
+%\begin{small}
+%Tina is a toolbox for the edition and analysis of Petri Nets and Time Petri Nets, developed in the OLC group of LAAS/CNRS.
+%\begin{itemize}
+%\item ouvrir une fenêtre de commandes en ligne ; taper "nd" (NetDraw)
+%\item faire Help, Setup (5eme ascenceur): indiquer le nombre de boutons de la souris
+%\item faire Help, Help : comment créer les  places, les transitions, les arcs, comment changer les propriétés d'une place (marquage, %label), d'un arc (poids), d'une transition (label). Comment déplacer, effacer les éléments...
+%\item éditer le RdP des lecteurs écrivains
+%\item générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "lts(.aut)".
+%\item dessiner ce graphe : click droit, "open file in nd" ; edit/draw ; déplacer les noeuds pour que le graphe soit lisible, et "séparer" les doubles flèches
+%\item générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "verbose".
+%\end{itemize}
+%\end{small}
+%\end{frame}
 
 \end{document}
