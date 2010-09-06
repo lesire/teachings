@@ -70,9 +70,9 @@
 	\item Système à événements discrets : les variables d'état changent {\it brusquement} à certains instants
 	\end{itemize}
 \item Evénement : son occurrence fait changer l'état du système
-\item Activité : {\it boîte noire} représente lŽévolution du système entre 2 événements
-\item Processus : séquence dŽévénements et d'activités \\
-	$\leadsto$  coopération, compétition, parallèle
+\item Activité : {\it boîte noire} représente l'évolution du système entre 2 événements
+\item Processus : séquence d'événements et d'activités \\
+	$\leadsto$  coopération, compétition, parallélisme
 \end{itemize}
 \end{frame}
 
@@ -671,7 +671,22 @@ Réseau de Petri répétitif : il existe une couverture de composantes répétit
 \begin{center}
 	\includegraphics[width=3cm]{exemplea} 
 \end{center}
-\end{frame}      
+\end{frame}
+
+\subsection{Tina}
+\begin{frame}{Tina}
+\begin{small}
+\begin{itemize}
+\item Ouvrir une fenêtre de commandes en ligne ; taper "nd" (NetDraw)
+\item Faire Help, Setup (5eme ascenceur): indiquer le nombre de boutons de la souris
+\item Faire Help, Help : comment créer les  places, les transitions, les arcs, comment changer les propriétés d'une place (marquage, label), d'un arc (poids), d'une transition (label). Comment déplacer, effacer les éléments...
+\item Editer le RdP des lecteurs écrivains
+\item Générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "lts(.aut)".
+\item Dessiner ce graphe : click droit, "open file in nd" ; edit/draw ; déplacer les noeuds pour que le graphe soit lisible, et "séparer" les doubles flèches
+\item Générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "verbose".
+\end{itemize}
+\end{small}
+\end{frame}    
 
 %%%%% COMPOSITION %%%%%
 \section{Composition}\subsection{Composition}
@@ -833,44 +848,17 @@ sensibilisation.
 \end{itemize}
 \end{frame}
 
-%\begin{frame}{Sémantique}
-%\begin{columns}
-%\column{.05\textwidth}\column{.65\textwidth}
-%	{\tt \bf Sémantique d'entrelacement :}\\
-%	\begin{small}
-%	$\bullet$ ~transitions sensibilisées en parallèle, \\
-%	mais franchies \textcolor[rgb]{0.00,0.00,1.00}{séquentiellement} \\
-%	(serveur unique  + durée de franchissement nulle);\\
-%	$\bullet$ ~au lieu $t_1 \| t_2$, on considère \\
-%	~~~~~~~~~~~$t_1 \, ; \, t_2$ ou $t_2 \, ; \, t_1$.
-%	\end{small}
-%\column{.35\textwidth}
-%	\centerline{\includegraphics[width=3.5cm]{rdp_s_entre}}
-%\end{columns}
-%\pause
-%\begin{columns}
-%\column{.35\textwidth}
-%	\centerline{\includegraphics[width=3.5cm]{rdp_s_forte}}
-%\column{.05\textwidth}\column{.65\textwidth}
-%	{\tt \bf Sémantique forte :}\\
-%	\begin{small}
-%	$\bullet$ ~si plusieurs transitions franchissables
-%	$I(t_i)=[a_i,b_i]$: franchir l'une d'elles avant la
-%	\textcolor[rgb]{0.00,0.00,1.00}{fin} de l'intervalle de tir des
-%	autres transitions.
-%	\pause
-%	$\bullet$ ~tir de $t_1$ avant $t_2$ ($b_2=$
-%	$\textcolor[rgb]{1.00,0.00,0.00}{4}$)
-%	$\rightarrow$ donc, $t_1 ~[1~3]$.
-%	\pause
-%	\only<2>{ 
-%	$\bullet$ ~tir $t_2$ avant $t_1$ ($b_1=$
-%	$\textcolor[rgb]{1.00,0.00,0.00}{3}$)
-%	$\rightarrow$ donc, $t_2$ $[2
-%	\textcolor[rgb]{1.00,0.00,0.00}{~3]}$.%}
-%	\end{small}
-%\end{columns}
-%\end{frame}
+\begin{frame}{Sémantique}
+\begin{itemize}
+\item si plusieurs transitions franchissables $I(t_i)=[a_i,b_i]$: franchir l'une d'elles avant la
+	\structure{fin} de l'intervalle de tir des autres transitions.
+\item tir de $t_1$ avant $t_2$ ($b_2=\structure{4}$) $\rightarrow$ donc, $t_1 \, [1 \, 3]$.
+\item tir $t_2$ avant $t_1$ ($b_1=\structure{3}$) $\rightarrow$ donc, $t_2$ $[2 \, 3]$
+\end{itemize}
+\begin{center}
+	\includegraphics[width=.4\linewidth]{rdp_s_forte}
+\end{center}
+\end{frame}
 
 %------------------
 %\subsection{Réseaux de contraintes temporelles}
@@ -921,344 +909,171 @@ sensibilisation.
 
 %\end{frame}
 
-%\begin{frame}
-%\frametitle{RdP : graphe de marquage}
-
-%\begin{columns}
-%\column{.45\textwidth}
-
-%\centerline{\includegraphics[height=4cm]{figCharles/rdp_sanst}} \vspace{1ex}
-%\centerline{Réseau de Petri atemporel}
-
-%\column{.05\textwidth} $\stackrel{analyse}{\longrightarrow}$
-
-%\column{.50\textwidth}
-
-%\centerline{\includegraphics[height=4cm]{figCharles/graph_m}} \vspace{1ex}
-%\centerline{Graphe de marquage}
-
-%\end{columns}
-%\end{frame}
-%---------------------------------------------------------------------------------%
-
-%\begin{frame}
-%\frametitle{RdP temporel : graphe de classes}
-
-%\begin{columns}
-%\column{.3\textwidth}
-%\centerline{\includegraphics[height=4cm]{figCharles/rdp_temps_ch}}
-%\vspace{2ex} \centerline{Réseau de Petri
-%\textcolor[rgb]{0.00,0.00,1.00}{Temporel}}
-
-%\column{.7\textwidth}
-%\begin{itemize}
-%\item Prise en compte du temps :
-%\begin{itemize}
-%\item Nombre infini d'états (marquage + temps) \item Nombre infini
-%de séquences
-%\end{itemize}
-
-%\item Il faut :
-%\begin{itemize}
-%\item Regrouper les états en un nombre fini de classes : 
-%\emph{oublier} une partie du passé.
-
-%\item Classe ${\cal C}$ : donne les  intervalles de tir et les contraintes
-%temporelles que doivent vérifier les
-%transitions vis-à-vis des franchissements
-%passés.
-%\end{itemize}
-%\end{itemize}
-
-%\end{columns}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Graphe de classes}
-
-%\begin{columns}
-%\column{.4\textwidth}
-%\centerline{\includegraphics[height=4cm]{figCharles/rdp_temps_ch}}
-%\vspace{2ex} \centerline{Réseau de Petri
-%\textcolor[rgb]{0.00,0.00,1.00}{Temporel}}
-
-%\column{.6\textwidth}
-
-%\textbf{État}: \{$M$, $I(t)$\}
-%\begin{itemize}
-%  \item $M$: Marquage
-%  \item $I(t)$: Fonction temporelle
-%\end{itemize}
-
-
-%\vspace{2ex} \textbf{Classe d'états}:
-
-%composée par tous les états que sont atteignables par une séquence
-%de tir.
-
-%\vspace{2ex} Plusieurs définitions de classe, selon le type de
-%propriétés à prouver :
-%\begin{enumerate}
-%  \item mode Linear,  {\footnotesize (B.Berthomieu)} % (LTL properties)%
-%  \item mode Arborescent,  {\footnotesize (B.Berthomieu)} % (CTL properties)%
-%    \item mode C,  {\footnotesize (J. Cardoso, R. Valette)} 
-%\end{enumerate}
-
-%\end{columns}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Graphe de classes mode linéaire}% {\footnotesize (B.Berthomieu)}
-
-%\begin{columns}
-%\column{.45\textwidth}
-
-%\only<1,2>{\centerline{\includegraphics[height=4cm]{figCharles/rdp_temps_ch}}
-%\vspace{1ex} \centerline{Réseau de Petri
-%\textcolor[rgb]{0.00,0.00,1.00}{Temporel}} }
-
-%----------
-%\only<3>{\centerline{\includegraphics[height=4cm]{figCharles/rdp_c1}}
-%\vspace{1ex} \centerline{Réseau de Petri
-%\textcolor[rgb]{0.00,0.00,1.00}{Temporel}}  \vspace{1ex} }
-
-%----------
-%\only<4,5>{\centerline{\includegraphics[height=4cm]{figCharles/rdp_c2}}
-%\vspace{1ex} \centerline{Réseau de Petri
-%\textcolor[rgb]{0.00,0.00,1.00}{Temporel}}  \vspace{1ex} }
-
-%----------
-%\only<6>{\centerline{\includegraphics[height=4cm]{figCharles/rdp_c3}}
-%\vspace{1ex} \centerline{Réseau de Petri
-%\textcolor[rgb]{0.00,0.00,1.00}{Temporel}}  \vspace{1ex} }
-
-%\column{.55\textwidth} 
-
-%-------------
-%\only<1>{\centerline{\includegraphics[width=5cm]{figCharles/horloge_che_a}}
-
-%\centerline{\includegraphics[height=4.2cm]{figCharles/graph_wd}}
-
-%}
-
-%-------------
-%\only<2>{\centerline{\includegraphics[width=5cm]{figCharles/horloge_che_a}}
-
-%\centerline{\includegraphics[height=4.2cm]{figCharles/graph_wd}}
-
-%\centerline{\textcolor[rgb]{1.00,0.00,0.00}{Tous ces états
-%sont-ils atteignables!?}}}
-
-%----------
-%\only<3>{\centerline{\includegraphics[width=5cm]{figCharles/horloge_che1_a}}
-%\centerline{\includegraphics[height=3.5cm]{figCharles/graph_wd2}}
-
-%\centerline{Si $t2$ est franchie au temps
-%\textcolor[rgb]{1.00,0.00,0.00}{3}}$\ldots$  $t3$ est-elle encore
-%franchissable?}
-
-%----------
-%\only<4>{\centerline{\includegraphics[width=5cm]{figCharles/horloge_che2_a}}
-
-%\centerline{\includegraphics[height=3.5cm]{figCharles/graph_wd2}}
-
-%\centerline{Si $t2$ est franchie au temps
-%\textcolor[rgb]{1.00,0.00,0.00}{3}}$\ldots$  $t3$ est-elle encore
-%franchissable?}
-%----------
-%\only<5>{\centerline{\includegraphics[width=5cm]{figCharles/horloge_che3_a}}
-
-%\centerline{\includegraphics[height=3.5cm]{figCharles/graph_wd2}}
-
-%\centerline{Si $t2$ est franchie au temps
-%\textcolor[rgb]{1.00,0.00,0.00}{3}}$\ldots$  $t3$ est-elle encore
-%franchissable?}
-%----------
-%----------
-%\only<6>{\centerline{\includegraphics[width=5cm]{figCharles/horloge_che4_a}}
-
-%\centerline{\includegraphics[height=3.5cm]{figCharles/graph_wd2}}
-
-%\centerline{Si $t2$ est franchie au temps
-%\textcolor[rgb]{1.00,0.00,0.00}{3}}$\ldots$  $t3$ est-elle encore
-%franchissable?
-% ~~~~\textcolor[rgb]{1.00,0.00,0.00}{\textbf{Non!}}%d
-% }
-
-%\end{columns}
-%\end{frame}
-
-
-%-------------------------------------------------------------------%
-
-%\begin{frame}
-%\frametitle{Graphe de classes mode arborescent}% {\footnotesize (B.Berthomieu)}
-%\begin{columns}
-
-%\column{.43\textwidth}
-%%----------
-%\centerline{\includegraphics[height=4cm]{figCharles/graph_wd}} \vspace{1ex}
-%Mode linéaire
-
-%\vspace{-1ex}
-%\begin{itemize}
-%  \item Problème branchement~:  distinguer les états dans le futur.
-%\end{itemize}
-%\vspace{2ex}
-%%----------
-%\column{.07\textwidth}
-%\centerline{\includegraphics[width=2cm]{figCharles/passage_wa}}
-
-%%----------
-%%right column
-%\column{.50\textwidth}
-%\centerline{\includegraphics[height=4cm]{figCharles/graph_a}} \vspace{1ex}
-%~~Mode arborescent
-%
-%\vspace{-1ex}
-%\begin{itemize}
-%  \item Problème branchement : résolu
-%  \item Mais encore problème de chemin : distinguer les états dans le passé.
-%\end{itemize}
-%
-%\end{columns}
-%
-%\end{frame}
-%
-%%------------------------------------------------------------------------------%
-%\begin{frame}
-%\frametitle{Graphe de classes mode C}%Proposition : g
-%
-%\begin{columns}
-%% left column
-%\column{.49\textwidth}
-%\centerline{\includegraphics[height=4cm]{figCharles/graph_a}} \vspace{1ex}
-%~~Mode arborescent
-%
-%\vspace{-1ex}
-%\begin{itemize}
-%  \item Problème branchement : résolu
-%  \item Mais encore problème de chemin : distinguer les états dans le passé.
-%\end{itemize}
-%
-%%middle column
-%\column{.04\textwidth}
-%%\centerline{\includegraphics[width=1.8cm]{passage_ac}}
-%.
-%
-%% right column
-%\column{.46\textwidth}
-%\centerline{\includegraphics[height=4cm]{figCharles/graph_c}} \vspace{1ex}
-%%\centerline{Classes Graph's proposal }
-%\centerline{Mode C}%Notre approche: 
-%
-%\vspace{-1ex}
-%\begin{itemize}
-%  \item Problème branchement : résolu
-%  \item Problème de chemin : résolu
-%\end{itemize}
-%\vspace{3ex}
-%
-%\end{columns}
-%\end{frame}
-
-% \begin{frame}
-% \frametitle{Calcul du graphe de classes mode linéaire}
-% 
-% Graphe de classes :
-% \begin{itemize}
-%\item noeuds (classes $C_i$) :
-%\begin{itemize}
-%\item états avec le même marquage,
-%\item domaine temporel (union des domaines temporels des états) :
-%\begin{itemize}
-%\item  intervalle de temps des transitions sensibilisées
-%\item  contraintes temporelles entre couples de transitions sensibilisées (mémoire temporelle depuis la classe où elles étaient sensibilisées) ;
-%\end{itemize}
-
-
-%\end{itemize}
-%\item arcs $(C_i,C_j)$ : intervalle de tir de $t$, avec $C_i \stackrel{t}{\rightarrow}C_j$
-%\end{itemize}
-%\includegraphics[height=3cm]{figCharles/rdp_temps_ch}
-% \end{frame}
-
-% \begin{frame}
-% \frametitle{Protocole unidirectionnel de transfert de données}
-
-%\vspace{-.2cm}
-%\centerline{\includegraphics[width=10cm]{figCharles/rdp_exo}}
-
-%~~RdP  {\color{blue}sans} le temps :\\
- 
-% \vspace{.2cm} 
-%\begin{columns}
-%\column{.5\textwidth}
-%{\scriptsize
-%\hspace{.5cm}Graphe de marquage non borné\\
-
-%\vspace{.2cm} 
-%\hspace{.5cm}path from 0 to 1 increases marking\\
-%\hspace{.5cm}0 : p1 p5 p6\\
-%\hspace{.5cm}1 : p1 p2 p5 p6\\
-
-%\vspace{.2cm} 
-%\hspace{.5cm}REACHABILITY GRAPH:\\
-%\hspace{.5cm}0 -$>$ t1/1\\
-%\hspace{.5cm}1 -$>$ t1/?, t2/?
-%~\\
-
-%\vspace{.4cm} 
-%}
-
-% \column{.5\textwidth}
-% {\scriptsize
-%  Graphe de couverture\\
-%  \includegraphics[width=5cm]{./figSH/ExIfac_gCk}\\
-%  CLASSES:\\
-
-%0 : p1 p5 p6\\
-%1 : p1 p2*w p5 p6\\
-%2 : p1 p2*w p3*w p5 p6\\
-%3 : p1 p2*w p3*w p4 p6\\
-
-%}
-
-% \end{columns}
-% \end{frame} 
-%  \begin{frame}
-% \frametitle{Protocole unidirectionnel de transfert de données}
-
-%\vspace{-.2cm}
-%\centerline{\includegraphics[width=10cm]{figCharles/rdp_exo}}
-%\begin{columns}
-% \column{.5\textwidth}
-%{\scriptsize Les classes (marquage + domaine temporel)} : \\
-% \includegraphics[width=4.4cm]{./figSH/clas1}\\
-%\includegraphics[width=6cm]{./figSH/cla2}\\
-
-%\column{.48\textwidth}
-% \includegraphics[width=5.3cm]{figCharles/w}
-
-% \end{columns}
-% {\scriptsize Intervalle de tir $D^j(t_i)$ de $t_i$ à partir de $C_j$ :\\
-%$D^0(t_1)=[4,6]$, $D^1(t_2)=[2,3]$, $D^2(t_3)=[0,0]$, $D^4(t_2)=[2.3]$, $D^4(t_5)=[0,3]$, $D^5(t_4)=D^5(t_5)=[0,0]$, $D^3(t_1)=[1,4]$, $D^3(t_5)=[0,4]$, $D^6(t_2)=[1,3]$, $D^7(t_1)=[0,4]$ }% fin script
-% \end{frame} 
-
-
-%\begin{frame}{Tina toolbox}
-%\begin{small}
-%Tina is a toolbox for the edition and analysis of Petri Nets and Time Petri Nets, developed in the OLC group of LAAS/CNRS.
-%\begin{itemize}
-%\item ouvrir une fenêtre de commandes en ligne ; taper "nd" (NetDraw)
-%\item faire Help, Setup (5eme ascenceur): indiquer le nombre de boutons de la souris
-%\item faire Help, Help : comment créer les  places, les transitions, les arcs, comment changer les propriétés d'une place (marquage, %label), d'un arc (poids), d'une transition (label). Comment déplacer, effacer les éléments...
-%\item éditer le RdP des lecteurs écrivains
-%\item générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "lts(.aut)".
-%\item dessiner ce graphe : click droit, "open file in nd" ; edit/draw ; déplacer les noeuds pour que le graphe soit lisible, et "séparer" les doubles flèches
-%\item générer le graphe d'accessibilité (tools/reachability analysis/ cocher "marking graph", utiliser comme sortie "verbose".
-%\end{itemize}
-%\end{small}
-%\end{frame}
+\subsection{Graphe de classes}
+\begin{frame}{Graphe de marquage classique}
+\begin{columns}
+\column{.45\textwidth}
+	\centerline{\includegraphics[height=4cm]{rdp_sanst}} \vspace{1ex}
+	\centerline{Réseau de Petri atemporel}
+\column{.05\textwidth} $\stackrel{analyse}{\longrightarrow}$
+\column{.50\textwidth}
+	\centerline{\includegraphics[height=4cm]{graph_m}} \vspace{1ex}
+	\centerline{Graphe de marquage}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Graphe de classes}
+\begin{columns}
+\column{.4\textwidth}
+	\begin{center}
+		\includegraphics[height=4cm]{rdp_temps_ch}\\
+		Réseau de Petri \structure{temporel}
+	\end{center}
+\column{.6\textwidth}
+	\begin{itemize}
+	\item Prise en compte du temps :
+		\begin{itemize}
+		\item Nombre infini d'états (marquage + temps)
+		\item Nombre infini de séquences
+		\end{itemize}
+	\item Il faut :
+		\begin{itemize}
+		\item Regrouper les états en un nombre fini de classes : \emph{oublier} une partie du passé.
+		\item Classe ${\cal C}$ : donne les  intervalles de tir et les contraintes temporelles que doivent vérifier les transitions vis-à-vis des franchissements passés.
+		\end{itemize}
+	\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Graphe de classes}
+\begin{columns}
+\column{.4\textwidth}
+	\begin{center}
+		\includegraphics[height=4cm]{rdp_temps_ch}\\
+		Réseau de Petri \structure{temporel}
+	\end{center}
+\column{.6\textwidth}
+	\begin{itemize}
+	\item \textbf{État}: \{$M$, $I(t)$\}
+		\begin{itemize}
+		\item $M$: Marquage
+		\item $I(t)$: Fonction temporelle
+		\end{itemize}
+	\item \textbf{Classe d'états}:\\
+		\small composée par tous les états que sont atteignables par une séquence de tir.
+	\item Plusieurs définitions de classe, selon le type de propriétés à prouver :
+		\begin{itemize}
+		\item mode Linear,  {\footnotesize (B.Berthomieu)} % (LTL properties)%
+		\item mode Arborescent,  {\footnotesize (B.Berthomieu)} % (CTL properties)%
+		\item mode C,  {\footnotesize (J. Cardoso, R. Valette)} 
+		\end{itemize}
+	\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Mode linéaire}% {\footnotesize (B.Berthomieu)}
+\begin{columns}
+\column{.45\textwidth}
+	\begin{center}
+		\only<1-2>{\includegraphics[height=4cm]{rdp_temps_ch}}%
+		\only<3>{\includegraphics[height=4cm]{rdp_c1}}%
+		\only<4,5>{\includegraphics[height=4cm]{rdp_c2}}%
+		\only<6>{\includegraphics[height=4cm]{rdp_c3}}%
+		~\\Réseau de Petri \structure{temporel}
+	\end{center}
+\column{.55\textwidth} 
+	\begin{center}
+		\only<1-2>{\includegraphics[width=.7\linewidth]{horloge_che_a}\\}%
+		\only<3>{\includegraphics[width=.7\linewidth]{horloge_che1_a}\\}%
+		\only<4>{\includegraphics[width=.7\linewidth]{horloge_che2_a}\\}%
+		\only<5>{\includegraphics[width=.7\linewidth]{horloge_che3_a}\\}%
+		\only<6>{\includegraphics[width=.7\linewidth]{horloge_che4_a}\\}%
+		%
+		\only<1-2>{\includegraphics[width=.5\linewidth]{graph_wd}}%
+		\only<3-6>{\includegraphics[width=.5\linewidth]{graph_wd2}}%
+		%
+		\only<2>{\\\structure{Tous ces états sont-ils atteignables!?}}%
+		\only<3-6>{\\Si $t2$ est franchie au temps \structure{3}, $t3$ est-elle encore franchissable?}%
+		\only<6>{ \alert{Non !}}
+	\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Mode arborescent}% {\footnotesize (B.Berthomieu)}
+\begin{columns}
+\column{.5\textwidth}
+	\centerline{\includegraphics[width=.8\linewidth]{graph_wd}}
+	\begin{itemize}
+	\item Problème branchement~:  distinguer les états dans le futur.
+	\end{itemize}
+\column{.5\textwidth}
+	\centerline{\includegraphics[width=.8\linewidth]{graph_a}}
+	\begin{itemize}
+	\item Problème branchement : résolu
+	\item Mais encore problème de chemin : distinguer les états dans le passé.
+	\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Mode C}%Proposition : g
+\begin{columns}
+\column{.5\textwidth}
+	\centerline{\includegraphics[width=.8\linewidth]{graph_a}}
+	\begin{itemize}
+	\item Problème branchement : résolu
+	\item Mais encore problème de chemin : distinguer les états dans le passé.
+	\end{itemize}
+\column{.5\textwidth}
+	\centerline{\includegraphics[width=.8\linewidth]{graph_c}}
+	\begin{itemize}
+	\item Problème branchement : résolu
+	\item Problème de chemin : résolu
+	\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Mode linéaire}
+Graphe de classes :
+\begin{itemize}
+\item noeuds (classes $C_i$) :
+	\begin{itemize}
+	\item états avec le même marquage,
+	\item domaine temporel (union des domaines temporels des états) :
+		\begin{itemize}
+		\item  intervalle de temps des transitions sensibilisées
+		\item  contraintes temporelles entre couples de transitions sensibilisées (mémoire temporelle depuis la classe où elles étaient sensibilisées) ;
+		\end{itemize}
+	\end{itemize}
+\item arcs $(C_i,C_j)$ : intervalle de tir de $t$, avec $C_i \stackrel{t}{\rightarrow}C_j$
+\end{itemize}
+\includegraphics[height=3cm]{rdp_temps_ch}
+\end{frame}
+
+\begin{frame}{Protocole unidirectionnel de transfert de données}
+\centerline{\includegraphics[width=.7\linewidth]{rdp_exo}}
+RdP \structure{sans} le temps : Graphe de couverture\\
+\begin{columns}
+\begin{column}{.4\linewidth}
+	\includegraphics[width=1.2\linewidth]{ExIfac_gCk}
+\end{column}
+\begin{column}{.6\linewidth}
+	\begin{description}
+	\item[0] : p1 p5 p6\\
+	\item[1] : p1 p2*w p5 p6\\
+	\item[2] : p1 p2*w p3*w p5 p6\\
+	\item[3] : p1 p2*w p3*w p4 p6\\
+	\end{description}
+\end{column}
+\end{columns}
+\end{frame} 
+
+\begin{frame}{Protocole unidirectionnel de transfert de données}
+Les classes (marquage + domaine temporel) :
+\begin{center}
+	\includegraphics[width=.6\linewidth]{w}
+\end{center}
+\includegraphics[width=.4\linewidth]{clas1}\\
+\includegraphics[width=.6\linewidth]{cla2}
+\end{frame}
 
 \end{document}
