@@ -31,7 +31,12 @@
 \tableofcontents[hidesubsections]
 \end{frame}
 
+%%%%%% INTRODUCTION %%%%%%%
 \section{Introduction}
+\begin{frame}
+\tableofcontents[hideothersubsections]
+\end{frame}
+
 \subsection{Introduction}
 \begin{frame}{Introduction}
 \begin{itemize}
@@ -107,7 +112,12 @@
 \end{block}
 \end{frame}
 
+%%%%% MODELE FORMEL %%%%%
 \section{Modèle formel}
+\begin{frame}
+\tableofcontents[hideothersubsections]
+\end{frame}
+
 \subsection{Définition}
 \begin{frame}{Définitions}
 \begin{itemize}
@@ -238,7 +248,7 @@
 \end{frame}
  
 \begin{frame}{Différentes interactions entre les processus}
-\begin{block}{Fork}
+\begin{block}{Branchement}
 \begin{columns}
 	\begin{column}{.3\linewidth}
 		\begin{center}
@@ -256,7 +266,7 @@
 \end{frame}
 
 \begin{frame}{Différentes interactions entre les processus}
-\begin{block}{Join}
+\begin{block}{Jonction}
 \begin{columns}
 	\begin{column}{.3\linewidth}
 		\begin{center}
@@ -330,15 +340,14 @@
 \begin{frame}{Exemple : Système par lot}
 \begin{itemize}
 \item peut produire deux produits ($Pr_1$ et $Pr_2$), utilisant 2 réacteurs
-($R_1$ e $R_2$) de fa\c{c}on concurrente,
+($R_1$ e $R_2$) de fa\c{c}on conhideothersubsectionse,
 \item produit $Pr_1$: est produit par $R_1$ ou $R_2$; doit être, au préalable,
 stocké dans le {\it buffer} $B_1$ ou $B_2$ (respectivement).
 \item produit $Pr_2$: est produit par le réacteur $R_2$.
 \end{itemize}
 \begin{center}
-\includegraphics[width=.2\linewidth]{reacteur}
-\hspace{.1\linewidth}
-\includegraphics[width=.4\linewidth]{freator}
+\includegraphics[width=.4\linewidth]{reacteur}
+%\includegraphics[width=.4\linewidth]{freator}
 \end{center}
 \end{frame}
  
@@ -412,6 +421,10 @@ M_0 & & M_1 & & M_2 & & M_1
 
 %%%%% PROPRIETES %%%%%
 \section{Analyse de propriétés}
+\begin{frame}
+\tableofcontents[hideothersubsections]
+\end{frame}
+
 \subsection{Propriétés comportementales}
 \begin{frame}{Réseau borné}
 \begin{itemize}
@@ -517,83 +530,83 @@ s^2 = {}^t\begin{pmatrix}0&0&1&1\end{pmatrix}$$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Exemple : Système par lot}
-\begin{columns}
-	\begin{column}{.4\linewidth}
-	\begin{center}
-		\includegraphics[width=\linewidth]{rea1}
-	\end{center}
-	\end{column}		
-	\begin{column}{.66\linewidth}
-		\begin{itemize}
-		\item $f^1 = {}^t\begin{pmatrix}1&1&1&1&1&0&0&0&0\end{pmatrix}$~:
-			fabrication de $Pr_1$
-		\item $f^2 = {}^t\begin{pmatrix}0&0&0&0&0&1&1&0&0\end{pmatrix}$~:
-			fabrication de $Pr_1$
-		\item $f^3 = {}^t\begin{pmatrix}0&0&1&0&0&0&0&1&0\end{pmatrix}$~:
-			état du réacteur $R_1$
-		\item $f^4 = {}^t\begin{pmatrix}0&0&0&0&1&0&1&0&1\end{pmatrix}$~:
-			état du réacteur $R_2$
-		\end{itemize}
-	\end{column}
-\end{columns}
-\end{frame}
+%\begin{frame}{Exemple : Système par lot}
+%\begin{columns}
+%	\begin{column}{.4\linewidth}
+%	\begin{center}
+%		\includegraphics[width=\linewidth]{rea1}
+%	\end{center}
+%	\end{column}		
+%	\begin{column}{.66\linewidth}
+%		\begin{itemize}
+%		\item $f^1 = {}^t\begin{pmatrix}1&1&1&1&1&0&0&0&0\end{pmatrix}$~:
+%			fabrication de $Pr_1$
+%		\item $f^2 = {}^t\begin{pmatrix}0&0&0&0&0&1&1&0&0\end{pmatrix}$~:
+%			fabrication de $Pr_1$
+%		\item $f^3 = {}^t\begin{pmatrix}0&0&1&0&0&0&0&1&0\end{pmatrix}$~:
+%			état du réacteur $R_1$
+%		\item $f^4 = {}^t\begin{pmatrix}0&0&0&0&1&0&1&0&1\end{pmatrix}$~:
+%			état du réacteur $R_2$
+%		\end{itemize}
+%	\end{column}
+%\end{columns}
+%\end{frame}
 
-\begin{frame}{Exemple : Système par lot}
-\begin{columns}
-	\begin{column}{.4\linewidth}
-	\begin{center}
-		\includegraphics[width=\linewidth]{rea1}
-	\end{center}
-	\end{column}		
-	\begin{column}{.65\linewidth}
-		\begin{itemize}
-		\item $M(p_1)+M(p_2)+M(p_3)+M(p_4)+M(p_5)=1$~: un seul état pour $Pr_1$ (attente, $B_1$, $B_2$, $R_1$, $R_2$)
-		\item $M(p_6)+M(p_7)=1$~: un seul état pour $Pr_2$ (attente ou $R_2$)
-		\item $M(p_3)+M(p_8)=1$~: $R_1$ libre ou prod. $Pr_1$
-		\item $M(p_5)+M(p_7)+M(p_9)=1$~: $R_2$ libre ou prod. $Pr_1$ ou $Pr_2$
-		\end{itemize} 
-	\end{column}
-\end{columns}
-\end{frame}
+%\begin{frame}{Exemple : Système par lot}
+%\begin{columns}
+%	\begin{column}{.4\linewidth}
+%	\begin{center}
+%		\includegraphics[width=\linewidth]{rea1}
+%	\end{center}
+%	\end{column}		
+%	\begin{column}{.65\linewidth}
+%		\begin{itemize}
+%		\item $M(p_1)+M(p_2)+M(p_3)+M(p_4)+M(p_5)=1$~: un seul état pour $Pr_1$ (attente, $B_1$, $B_2$, $R_1$, $R_2$)
+%		\item $M(p_6)+M(p_7)=1$~: un seul état pour $Pr_2$ (attente ou $R_2$)
+%		\item $M(p_3)+M(p_8)=1$~: $R_1$ libre ou prod. $Pr_1$
+%		\item $M(p_5)+M(p_7)+M(p_9)=1$~: $R_2$ libre ou prod. $Pr_1$ ou $Pr_2$
+%		\end{itemize} 
+%	\end{column}
+%\end{columns}
+%\end{frame}
  
-\begin{frame}{Exemple : Système par lot}
-\begin{columns}
-	\begin{column}{.4\linewidth}
-	\begin{center}
-		\includegraphics[width=\linewidth]{rea1}
-	\end{center}
-	\end{column}		
-	\begin{column}{.65\linewidth}
-		\begin{itemize}
-		\item $s^1 = {}^t\begin{pmatrix}1&1&1&0&0&0&0&0\end{pmatrix}$~:
-		$Pr_1$ passe par le {\em buffer} et est prod. par $R_1$ ; un nouveau cycle peut recommencer ;
-		\item $s^2 = {}^t\begin{pmatrix}0&0&0&1&1&1&0&0\end{pmatrix}$~:
-		même comportement pour $Pr_2$ et $R_2$ ;
-		\item $s^3 = {}^t\begin{pmatrix}0&0&0&0&0&0&1&1\end{pmatrix}$~:
-		début de prod. de $Pr_2$ et fin
-		\end{itemize} 
-	\end{column}
-\end{columns}
-\end{frame}
+%\begin{frame}{Exemple : Système par lot}
+%\begin{columns}
+%	\begin{column}{.4\linewidth}
+%	\begin{center}
+%		\includegraphics[width=\linewidth]{rea1}
+%	\end{center}
+%	\end{column}		
+%	\begin{column}{.65\linewidth}
+%		\begin{itemize}
+%		\item $s^1 = {}^t\begin{pmatrix}1&1&1&0&0&0&0&0\end{pmatrix}$~:
+%		$Pr_1$ passe par le {\em buffer} et est prod. par $R_1$ ; un nouveau cycle peut recommencer ;
+%		\item $s^2 = {}^t\begin{pmatrix}0&0&0&1&1&1&0&0\end{pmatrix}$~:
+%		même comportement pour $Pr_2$ et $R_2$ ;
+%		\item $s^3 = {}^t\begin{pmatrix}0&0&0&0&0&0&1&1\end{pmatrix}$~:
+%		début de prod. de $Pr_2$ et fin
+%		\end{itemize} 
+%	\end{column}
+%\end{columns}
+%\end{frame}
 
-\begin{frame}{Exemple : Système par lot}
-\begin{columns}
-	\begin{column}{.4\linewidth}
-	\begin{center}
-		\includegraphics[width=\linewidth]{rea1}
-	\end{center}
-	\end{column}		
-	\begin{column}{.65\linewidth}
-		Seules séquences effectivement réalisables :
-		\begin{itemize}
-		\item $s_1 = t_a t_b t_c$
-		\item $s_2 = t_d t_e t_f$
-		\item $s_3 = t_g t_h$
-		\end{itemize} 
-	\end{column}
-\end{columns}
-\end{frame}
+%\begin{frame}{Exemple : Système par lot}
+%\begin{columns}
+%	\begin{column}{.4\linewidth}
+%	\begin{center}
+%		\includegraphics[width=\linewidth]{rea1}
+%	\end{center}
+%	\end{column}		
+%	\begin{column}{.65\linewidth}
+%		Seules séquences effectivement réalisables :
+%		\begin{itemize}
+%		\item $s_1 = t_a t_b t_c$
+%		\item $s_2 = t_d t_e t_f$
+%		\item $s_3 = t_g t_h$
+%		\end{itemize} 
+%	\end{column}
+%\end{columns}
+%\end{frame}
 
 \subsection{Analyse}
 \begin{frame}{Analyse des propriétés}
@@ -632,11 +645,11 @@ $$\forall t \in T, \exists M_i, M_j \in {\cal A(R},M), \; / \; M_i
 \end{block}
 \end{frame}  
 
-\begin{frame}{Analyse par énumération des marquages}
-\begin{center}
-\includegraphics[width=.8\linewidth]{qviva-g}
-\end{center}
-\end{frame}  
+%\begin{frame}{Analyse par énumération des marquages}
+%\begin{center}
+%\includegraphics[width=.8\linewidth]{qviva-g}
+%\end{center}
+%\end{frame}  
  
 \begin{frame}{Analyse structurelle}
 \begin{block}{Composantes conservatives}
@@ -667,14 +680,20 @@ Réseau de Petri répétitif : il existe une couverture de composantes répétit
 \end{block}
 \end{frame}  
    
-\begin{frame}{Exemples}
+\begin{frame}{Exemple}
 \begin{center}
 	\includegraphics[width=3cm]{exemplea} 
 \end{center}
 \end{frame}
 
+\begin{frame}{Exemple : Système par lot}
+\begin{center}
+	\includegraphics[width=.8\linewidth]{rea1}
+\end{center}
+\end{frame}
+
 \subsection{Tina}
-\begin{frame}{Tina}
+\begin{frame}
 \begin{small}
 \begin{itemize}
 \item Ouvrir une fenêtre de commandes en ligne ; taper "nd" (NetDraw)
@@ -689,7 +708,12 @@ Réseau de Petri répétitif : il existe une couverture de composantes répétit
 \end{frame}    
 
 %%%%% COMPOSITION %%%%%
-\section{Composition}\subsection{Composition}
+\section{Composition}
+\begin{frame}
+\tableofcontents[hideothersubsections]
+\end{frame}
+
+\subsection{Composition}
 \begin{frame}{Caractéristiques de la représentation par RdP}
 \begin{itemize}
 \item \structure{Modularité} : est-il possible de décomposer un système complexe?
@@ -804,7 +828,12 @@ Deux processus $A$ et $B$ exécutant chacun une opération doivent se communique
 %\end{frame}
 
 %%% TEMPOREL %%%
-\section{Réseau de Petri et le temps}\subsection{Introduction}
+\section{Réseau de Petri et le temps}
+\begin{frame}
+\tableofcontents[hideothersubsections]
+\end{frame}
+
+\subsection{Introduction}
 \begin{frame}{Réseau de Petri et le temps}
 Plusieurs extensions de RdP pour prendre en compte le temps :
 \begin{itemize}
