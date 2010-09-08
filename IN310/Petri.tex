@@ -340,7 +340,7 @@
 \begin{frame}{Exemple : Système par lot}
 \begin{itemize}
 \item peut produire deux produits ($Pr_1$ et $Pr_2$), utilisant 2 réacteurs
-($R_1$ e $R_2$) de fa\c{c}on conhideothersubsectionse,
+($R_1$ e $R_2$) de fa\c{c}on concurrente,
 \item produit $Pr_1$: est produit par $R_1$ ou $R_2$; doit être, au préalable,
 stocké dans le {\it buffer} $B_1$ ou $B_2$ (respectivement).
 \item produit $Pr_2$: est produit par le réacteur $R_2$.
@@ -637,7 +637,7 @@ Si le réseau est non borné, on introduit le symbole $\omega$ pour rendre l'arb
 \begin{itemize}
 \item Réseau \structure{$k$-borné} $\Leftrightarrow {\cal A(R},M)$ borné
 \item Réseau \structure{réinitialisable} $\Leftrightarrow {\cal A(R},M)$ fortement connexe
-$$\forall M_i, M_j \in {\cal A(R},M), \; \exists s \, / \; M_i \stackrel{s} M_j$$
+$$\forall M_i, M_j \in {\cal A(R},M), \; \exists s \, / \; M_i \stackrel{s}{\rightarrow} M_j$$
 \item Réseau \structure{vivant} $\Leftrightarrow {\cal A(R},M)$ fortement connexe et chaque transition étiquette au moins un arc
 $$\forall t \in T, \exists M_i, M_j \in {\cal A(R},M), \; / \; M_i
 \stackrel{t}{\rightarrow} M_j$$
