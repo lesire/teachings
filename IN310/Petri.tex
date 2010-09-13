@@ -195,7 +195,7 @@
 \begin{frame}{Règle de fonctionnement}
 \begin{block}{Transition sensibilisée à partir de M}
 	\begin{itemize}
-	\item il y a un numéro suffisant de jetons dans les places d'entrée,
+	\item il y a un nombre suffisant de jetons dans les places d'entrée,
 	\item $\forall p \in P, \;\;  M(p) \geq Pre(p, t)$
 	\item $M \geq Pre(\, . \, ,t)$
 	\end{itemize}
@@ -616,7 +616,7 @@ s^2 = {}^t\begin{pmatrix}0&0&1&1\end{pmatrix}$$
 \item[Analyse par réduction] si le réseau est trop grand ou non borné, on peut réduire la taille du réseau, en utilisant certaines règles de réduction.
 \end{description}
 \end{frame}
- 
+
 \begin{frame}{Analyse par énumération des marquages}
 \begin{block}{Arbre de couverture}
 \begin{itemize}
@@ -638,7 +638,8 @@ Si le réseau est non borné, on introduit le symbole $\omega$ pour rendre l'arb
 \item Réseau \structure{$k$-borné} $\Leftrightarrow {\cal A(R},M)$ borné
 \item Réseau \structure{réinitialisable} $\Leftrightarrow {\cal A(R},M)$ fortement connexe
 $$\forall M_i, M_j \in {\cal A(R},M), \; \exists s \, / \; M_i \stackrel{s}{\rightarrow} M_j$$
-\item Réseau \structure{vivant} $\Leftrightarrow {\cal A(R},M)$ fortement connexe et chaque transition étiquette au moins un arc
+\item ${\cal A(R},M)$ fortement connexe $\Rightarrow$\\
+Réseau \structure{vivant} $\Leftrightarrow$ Chaque transition étiquette au moins un arc
 $$\forall t \in T, \exists M_i, M_j \in {\cal A(R},M), \; / \; M_i
 \stackrel{t}{\rightarrow} M_j$$
 \end{itemize}  
@@ -679,7 +680,73 @@ Réseau de Petri répétitif : il existe une couverture de composantes répétit
 	\end{itemize}
 \end{block}
 \end{frame}  
-   
+
+\begin{frame}{Analyse par réduction}
+\begin{itemize}
+\item On cherche à réduire la taille du réseau à analyser, en conservant ses propriétés ;
+\item Plusieurs types de réduction :
+	\begin{itemize}
+	\item Place substituable
+	\item Place implicite
+	\item Transition neutre
+	\item Transitions identiques
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Analyse par réduction}
+\begin{block}{Place substituable}
+	\begin{itemize}
+	\item Si $p$ n'a qu'une transition en entrée $t_e$ et qu'une en sortie $t_s$ :
+		\begin{eqnarray*}
+		& & Post(p, t_e) = Pre(p, t_s)\\
+		& & \forall p' \in P, \; p' \neq p \Rightarrow Pre(p', t_s) = 0
+		\end{eqnarray*}
+	\item Sa réduction fournit un réseau sans $p$ et où $t_e$ et $t_s$ sont remplacées par $t_{es}$ :
+		\begin{eqnarray*}
+		\forall p' \in P, \; Pre(p', t_{es}) &=& Pre(p', t_e)\\
+		Post(p', t_{es}) &=& Post(p', t_e) + Post(p', t_s)
+		\end{eqnarray*}
+	\end{itemize}	
+\end{block}
+\end{frame}
+
+\begin{frame}{Analyse par réduction}
+\begin{block}{Place implicite}
+	\begin{itemize}
+	\item Son marquage est une combinaison linéaire du marquage d'autres places : elle est donc inutile !
+	\item Deux cas triviaux :
+		\begin{itemize}
+		\item Deux places sont identiques (même transitions, Pre et Post) ;
+		\item Une place n'est connectée que par des boucles élémentaires (implicite / $\emptyset$).
+		\end{itemize}
+	\end{itemize}	
+\end{block}
+\end{frame}
+
+\begin{frame}{Analyse par réduction}
+\begin{block}{Transition neutre}
+	\begin{itemize}
+	\item Une transition neutre est une transition connectée uniquement par des boucles élémentaires :
+	$$Pre(., t) = Post(., t)$$
+	\item Pour conserver la propriété de vivacité, il faut qu'il existe une transition dans le réseau réduit permettant de vérifier cette vivacité :
+		\begin{itemize}
+		\item Soit $\exists t_1, \; Post(., t_1) = Pre(., t)$
+		\item Soit $\exists t_2, \; Pre(., t_2) = Pre(., t)$
+		\end{itemize}
+	\end{itemize}	
+\end{block}
+\end{frame}
+
+\begin{frame}{Analyse par réduction}
+\begin{block}{Transitions identiques}
+	\begin{itemize}
+	\item Si deux transitions $t_1$ et $t_2$ sont identiques on peut supprimer l'une des deux
+	$$Pre(., t_1) = Pre(., t_1) \; \mbox{ et } \; Post(., t_1) = Post(., t_1)$$
+	\end{itemize}	
+\end{block}
+\end{frame}
+
 \begin{frame}{Exemple}
 \begin{center}
 	\includegraphics[width=3cm]{exemplea} 
