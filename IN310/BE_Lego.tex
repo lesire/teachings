@@ -41,13 +41,13 @@ Modeling, analysis, simulation and execution of a Lego robot control using an In
 \section{Introduction}  \label{sec:ipn_intro}
 
 As seen in the lectures,  a Petri net model has two advantages: it is a graphical model, making edition and documentation easier, and it is a formal model, making formal analysis possible, such as verifying if some property is satisfied or not, if there is a deadlock, etc.
-Another advantage of Petri nets is that the model can be directly executed using a general program called  {\em token player} as described in section~\ref{sec:tp}. This token player can be used for simulating a Petri net model and also be embedded in a device as a Lego robot in this lab class. When the system is reactive, it is necessary to use an interpreted Petri net (see section~\ref{sec:ipn}). So, once a Petri model is created, there is no code generation, the same model is used in the edition, validation and execution. The fact the a same Petri net model can be used in different phases of the life cycle of the system decreases the errors due to the translations. 
+Another advantage of Petri nets is that the model can be directly executed using a general program called  {\em token player} as described in section~\ref{sec:tp}. This token player can be used for simulating a Petri net model and also be embedded in a device as a Lego robot in this lab class. When the system is reactive, it is necessary to use an interpreted Petri net (see section~\ref{sec:ipn}). So, once a Petri model is created, there is no code generation, the same model is used in the edition, validation and execution. The fact that a same Petri net model can be used in different phases of the life cycle of the system decreases the errors due to the translations. 
 
 \subsection{Interpreted Petri nets (IPN)} \label{sec:ipn}
 
 In a (\emph{classical}, or autonomous) Petri net $R = <\!P, T, Pre, Post\!>$ only the \emph{control structure} is represented: places ($P$), transitions ($T$) and arcs ($Pre, Post$) between them. If such a Petri net is used as a model of a physical system, transitions denote the state changes.
 
-If this system interacts with the environment, it is necessary to consider the changes occurring in the system, like a \emph{sensor} value change. It can be also be necessary to apply actions on the \emph{actuators}. This is taken into account by Interpreted Petri nets as depicted in fig.~\ref{tokenP}.a, an extension of autonomous Petri net  where there are, associating with a transition, a pair {\tt cond/act} of:
+If this system interacts with the environment, it is necessary to consider the changes occurring in the system, like a \emph{sensor} value change. It can be also be necessary to apply actions on the \emph{actuators}. This is taken into account by Interpreted Petri nets as depicted in fig.~\ref{tokenP}.a, an extension of autonomous Petri net  where there is, associated with a transition, a pair {\tt cond/act} of:
 \begin{itemize}
 \item extra-conditons {\tt  cond}: a conjunction of binary conditions. The transition is enabled to fire \emph{if} it is enabled by the marking \emph{and} \emph{if} the extra-conditions are true. It can be external to the token player (e.g. a sensor value) or internal to the token player (e.g. a variable). \\
 Ex: {\tt  cond} = $(speed > 40) \wedge (light \leq 40) \wedge (var \leq 3)$;%pour faire ^
@@ -75,10 +75,10 @@ The data handled by all  pair {\tt cond/act} set up a \emph{data structure}. So 
 
 \subsection{Validating Interpreted Petri nets}\label{sec:val_ipn}
 
-The control structure of a IPN is also called {\em underlined} PN and it is the only part that can be analyzed as seen in the lectures. An IPN whose underlined net is live \emph{can} has a deadlock (e.g., the extra-condition coming from a sensor is false). An IPN whose underlined net is unbounded (respectively, not live) can be bounded (respectively, live), according with the extra-conditions. But it's better to deal with underlined PN having the good properties.
+The control structure of a IPN is also called {\em underlined} PN and it is the only part that can be analyzed as seen in the lectures. An IPN whose underlined net is live \emph{can} have a deadlock (e.g., the extra-condition coming from a sensor is false). An IPN whose underlined net is unbounded (respectively, not live) can be bounded (respectively, live), according with the extra-conditions. But it's better to deal with underlined PN having the good properties.
 % un rdp non-borné et non-vivant peut être borné et vivant avec les donnees, voir Essai4???
 
-The steps for validating an IPN are the following:
+The steps proposed for validating the IPN of this lab are the following:
 \begin{description}
 \item[Step 1:] analyze the underlined PN using Tina tools (marking graph and/or structural analysis);  this net can also be simulated using the Tina simulator. See section~\ref{sec:tina} for seeing how to use Tina.
 \item[Step 2:] simulate the whole IPN (underlined PN $R$ + pair {\tt cond/act} associated with each transition $t \in T$) using the NaviSim simulator.
@@ -92,7 +92,7 @@ A token player is a general program that updates the marking of an Interpreted P
 a transition $t$ is fired and executes the action(s) associated with $t$.
 Starting from an initial marking, the token player verifies if there are transitions \emph{enabled} by the marking. If yes, it verifies if there is a \emph{fireable} transition (extra-conditions {\tt cond} associated with the transition are true), and fires the most priority transition executing its actions {\tt act}. The firing of a transition can disable some transitions that were enabled at the initial marking, so after a transition firing it is necessary to verify again the new set of enabled transitions.%\footnote{There are several works done on token players in order to optimize the calculation of the enabled transitions set, see \ref{}.}. 
 
-The behavior of the Token player is represented by the algorithm~\ref{algtokenP}. This is a very simple algorithm where the information building up the data structure of a Petri net (sensors values, internal variables and bluetooth messages) is read at each 200ms, starting a cycle that looks for a fireable transition and fires it. In order to guarantee the correct updating, the reading cycle of sensors, interval variable and bluetooth messages is 100ms.
+The behavior of the Token player is represented by algorithm~\ref{algtokenP}. This is a very simple algorithm where the information building up the data structure of a Petri net (sensors values, internal variables and bluetooth messages) is read at each 200ms, starting a cycle that looks for a fireable transition and fires it. In order to guarantee the correct updating, the reading cycle of sensors, interval variable and bluetooth messages is 100ms.
 
 \begin{algorithm}[!ht]
 \caption{Token Player}
@@ -124,7 +124,7 @@ The behavior of the Token player is represented by the algorithm~\ref{algtokenP}
 
 It can occurs that a transition is enabled by the marking but it is never fired because the extra-condition {\tt cond} is not true. This deadlock can corresponds to a failure in the system (e.g., a sensor value that is not the good one), or to a bad design (a bad choice for a sensor value). That is why it is necessary to validate an IPN using a simulator, even if such validation is not exhaustive. But it helps to validate the IPN model before executing it  embedded in the system (robot).
 
-Note that in the simulator as well in the embedded control, if an information concerning the data structure (e.g. a sensor value) changes but  the corresponding transition is not enabled by the marking, nothing will occur. 
+Note that in the simulator as well as in the embedded control, if an information concerning the data structure (e.g. a sensor value) changes but  the corresponding transition is not enabled by the marking, nothing will occur. 
 
 More complex token players, instead of having a data structure reading cycle (as the one with 200ms), wait for the occurrence of an event (e.g. a changing in a sensor value). An alarm can also be activated if such event occurs but the corresponding transition is not enabled by the marking. This case corresponds to the occurrence of an event attached to a transition whose current input places marking does not represent the actual state of the system.
 
@@ -152,29 +152,29 @@ The brick Lego NXT is the brain of a MINDSTORMS robot and  contains:
 
 In the current version, the token player calculates the set of enabled transitions and verifies if there is a fireable transition at each 200ms. All the information concerning the data structure (sensors, variables, bluetooth messages) are read at each 100ms.
 
-The interpreted Petri net model (a .rdp file) must be uploaded on the NXT to be played by the token player as well  as the list of way points used for the robot navigation as described in the following.
+The interpreted Petri net model (a .rdp file) must be uploaded on the NXT to be played by the token player as well  as the list of points used for the robot navigation as described in the following.
 
 \newpage
 \section{Control of a Mindstorm Lego}
 \subsection{The Mindstorm Lego}
 
-The robot Navi used in this lab class is the one represented in fig.~\ref{robot}.a, with: a digger, 2 tractor wheels and a freewheel;  a  light sensor and  a compass sensor; 3 actuators (2 for the tractor wheels and one for control the digger). Navi has a brick Lego NXT as described in section~\ref{brick} and was conceived for the purposes of terrestrial navigation. It can follow some way points (sets of coordinates identifying a point in a plan, in our case) along a path; a section is defined as a path between two consecutive way points, from a way point W$_i$ to the next way point W$_{i+1}$.  Two particular points are defined: B (for base) and L (for delivering).
+The robot Navi used in this lab class is the one represented in fig.~\ref{robot}.a, with: a digger, 2 tractor wheels and a freewheel;  a  light sensor and  a compass sensor; 3 actuators (2 for the tractor wheels and one for control the digger). Navi has a brick Lego NXT as described in section~\ref{brick} and was conceived for the purposes of terrestrial navigation. It can follow some points (sets of coordinates identifying a point in a plan, in our case) along a path; a section is defined as a path between two consecutive points, from a point W$_i$ to the next point W$_{i+1}$.  Two particular points are defined: B (for base) and L (for delivering).
 
 \subsection{Specification}
-Navi is on an initial point with coordinates (0,0) and must a) go  first to the \emph{base}  or B point, b) follow the predefined way points until the last way point (the last one in the .wp file), then c) come back to the base and stop. 
+Navi is on an initial point with coordinates (0,0) and must a) go  first to the \emph{base}  or B point, b) follow the predefined points until the last point (the last one in the .wp file), then c) come back to the base and stop. 
 The .wp file has the form represented in fig.~\ref{robot}.b and must also be uploaded in the NXT brick.
 
-In its way from B point to the final way point, if Navi detects a ball (the light sensor value is more than 50) in a section [W$_i$, W$_{i+1}$],  it lowers its digger for taking the ball (without stop) and when it arrives at point W$_{i+1}$, it brings  the ball to the L \emph{delivering} point. When arriving at the L point, it raises the digger to leave the ball and comes back to W$_{i+1}$, the end way point of the section it found the ball.
+In its way from B point to the final point, if Navi detects a ball (the light sensor value is more than 50) in a section [W$_i$, W$_{i+1}$],  it lowers its digger for taking the ball and when it arrives at point W$_{i+1}$, it brings  the ball to the L \emph{delivering} point. When arriving at the L point, it raises the digger to leave the ball and comes back to W$_{i+1}$, the end point of the section it found the ball.
  
-If Navi goes through a section  without find any ball, it goes on  to the next way point in the list and so on.   When arriving at the last way point of the list (it has completed the navigation through all way points), it comes back to the base (initial WP) and stop.
+If Navi goes through a section  without finding any ball, it goes on  to the next point in the list and so on.   When arriving at the last point of the list (it has completed the navigation through all points), it comes back to the base (initial WP) and stop.
 
-Before moving through the way points, the (complex) predefined action {\tt initNave} must be executed by the token player, in order to : a) calibrate the compass, b) initialize the navigation (all coordinates are set to zero), c) read the .wp file containing the way points (the WP are not absolute but relative to (0,0)) as well B and L points. 
+Before moving through the points, the (complex) predefined action {\tt initNave} must be executed by the token player, in order to : a) calibrate the compass, b) initialize the navigation (all coordinates are set to zero), c) read the .wp file containing the points (the WP are not absolute but relative to (0,0)) as well as B and L points. 
 %Several scenarios can occur going from the base WP to the final WP: Navi can find a ball in each section (bring each one to the delivering WP and coming back to the last WP), find a ball in some sections or find any ball. But it always must go to the final WP and come back from this WP to the base WP. 
 
 \vspace{.3cm}
 {\bf Questions:} You must model, using an Interpreted Petri net (see section~\ref{sec:ipn_intro}), the behavior of the robot, allowing it:
 \begin{enumerate}
-\item to follow all the way points contained in the .wp file (B, L and list of WP), see fig.~\ref{robot}.b;
+\item to follow all the points contained in the .wp file (B, L and list of WP), see fig.~\ref{robot}.b;
 \item same as question 1, but it must detect a ball in a section $S$, deliver it  (if any) at L point, come back to $S$. When the light sensor is used, it is necessary to calibrate it using the action ETALON\_CAPT\_LUMIERE);
 \item same as question 2, but consider that the following error may occur: Navi detects a ball, lower the digger but the ball is not caught. In this case, Navi must go to the next section instead of delivering a (non-existent) ball. Be careful with the digger position.
 \end{enumerate}
@@ -194,9 +194,8 @@ Remark: you must read carefully section~\ref{sec:ipn_intro} and follow the steps
 		W,60.0,50.0
 	%	\end{verbatim}
 		\end{minipage}}
-	\caption{The robot for terrestrial navigation through waypoints}
+	\caption{The robot for terrestrial navigation through waypoints}\label{robot}
 \end{center}
-\label{robot}
 \end{figure}
 
 \subsection{From Modeling to Execution of an Interpreted PN} \label{sec:model}
@@ -227,7 +226,7 @@ Three files are created: a {\tt .rdp} file that will be uploaded in the NXT and 
 
 \vspace{-.5cm}
 \begin{table}[htdp]
-\caption{The .net and .rdp files for the example on fig.~\ref{tokenP}.a}
+\caption{The .net and .rdp files for the example on fig.~\ref{tokenP}.a}\label{files}
 \begin{center}
 	\begin{tabular}{|c|c|}
 	\hline
@@ -257,7 +256,6 @@ t2:X2*1;11,1,1;X3*1;19,0;1
 	\hline
 	\end{tabular}
 \end{center}
-\label{files}
 \end{table}%
 
 \subsubsection{Executing the IPN on the Navi robot}
@@ -288,12 +286,11 @@ The first step is  to upload the .rdp file (representing your IPN model) on the 
 	t9 franchie}\\
 	\end{footnotesize}
 	\end{minipage}}
-\caption{Navi}
+\caption{Navi}\label{navi}
 \end{center}
-\label{navi}
 \end{figure}
 
-The NXT has an interface made up of 4 buttons: right and left arrow (gray), escape (dark gray) and enter or OK (orange), as depicted in fig.~\ref{navi}.a. When the robot is On, the screen of fig.~\ref{navi}.b  appears.
+The NXT has an interface made up of 4 buttons: right and left arrows (gray), escape (dark gray) and enter or OK (orange), as depicted in fig.~\ref{navi}.a. When the robot is On, the screen of fig.~\ref{navi}.b  appears.
 In our case, a program called {\tt JoueurE.nxj} must be run that do some initializations and call the token player. 
 There are two ways to run  {\tt JoueurE.nxj}: 
 \begin{itemize}
@@ -324,9 +321,9 @@ The compass used by Navi is a magnetic one; if it meet a magnetic metal device (
 
 \subsection{Tina tool} \label{sec:tina}
 {\bf tina} %\footnote{Tina is a toolbox developed in the OLC group of LAAS/CNRS.} 
- is a toolbox for the edition (graphical or textual editor {\bf nd} (NetDraw)), the analysis of Petri nets (from the reachable marking graph and  the structural analysis).
+ is a toolbox for the edition (graphical or textual editor {\bf nd} (NetDraw)), the analysis of Petri nets (for the reachable marking graph and  the structural analysis).
 {\bf tina} do the analysis of temporal PN by constructing the graph of classes.
-It allows using mouse with 1, 2 or 3 buttons. Remember {\bf tina} can only edit and analyze the underlined (Interpreted) Petri net (without conditions and actions).
+Remember {\bf tina} can only edit and analyze the underlined (Interpreted) Petri net (without conditions and actions).
 For more details and download, see 
 \url{http://homepages.laas.fr/bernard/tina/}. 
 
@@ -334,7 +331,7 @@ For more details and download, see
 
  \begin{itemize}
 \item if there is no graphical icon, open a x-term or a window to do line commands; write "nd\&" (NetDraw),
-\item on the window, click Help, Setup and indicate the number of mouse buttons,
+\item on the window, click Edit, Preferences and indicate the number of mouse buttons,
 
 \item click Help/Help, to know how to create places, transitions, arcs, how to change place properties (marking, label),  arc properties (weight), transition properties (label); how to move and to erase the elements. Leave this window open, you'll need it,
 \item edit your PN in graphical mode  (.ndr file): File/new time Petri net(graphic, .ndr),
@@ -345,7 +342,7 @@ In order to be translated by the tool Tina2Lego, the transition label in the .nd
 \begin{itemize}
 \item only alphanumerical characters are allowed for conditions or actions in the label (no blank). Use GT instead of $\geq$, EQ for $=$, etc;
 
-\item only predefined conditions can be used; they corresponding to the sensors already existent (such as LUMIERE1\_EGAL\_40) or status information (e.g. FIN\_MVMT, PRISE\footnote{Other predefined conditions exist: ACTION\_EN\_COURS, DERNIER\_WP, etc. Go to the folder {\tt doc}, and click on  {\tt index.html} file, then  {\tt nomConditions} for the complete list of conditions and {\tt nomActions} for the complete list of actions, or see table~\ref{txt_file_2}.})) 
+\item only predefined conditions can be used; they correspond to the sensors already existent (such as LUMIERE1\_EGAL\_40) or status information (e.g. FIN\_MVMT, PRISE\footnote{Other predefined conditions exist: ACTION\_EN\_COURS, DERNIER\_WP, etc. Go to the folder {\tt doc}, and click on  {\tt index.html} file, then  {\tt nomConditions} for the complete list of conditions and {\tt nomActions} for the complete list of actions, or see table~\ref{txt_file_2}.})) 
 and 3  variables (VAR\_1,VAR\_2, VAR\_3) that can be read/written by the token player. In the label you can use the predefined name (LUMIERE1\_EGAL\_40) or a different name (LightEq40) since the actual conditions and actions are inserted during the translation using Tina2Lego.
 Use a mnemonic name for helping during the translation;
 
@@ -378,7 +375,7 @@ In a reachable marking graph  ${\cal A(R},M_0)$ a node represents
 a marking $M$ and an arc $(M,M')$ labelled by $t$ indicates that $M \stackrel{t}{\longrightarrow} M'$. Tina has several outputs, we will use two of them: 
 
   \begin{enumerate}
-\item  the reachability graph in a graphical mode (.aut file) whose notes ($i=1..k$) are the markings (states) and an arc is labelled by a  transition. Use menu
+\item  the reachability graph in a graphical mode (.aut file) whose nodes ($i=1..k$) are the markings (states) and arcs are labelled by a  transition. Use menu
 tools/reachability analysis/ choose "marking graph", and "lts(.aut)".
 To draw this graph: right click, "open file in nd"; edit/draw; choose "neato"; move the nodes and (if it is necessary) separate the double arrows if any;
 \item file with information about the analysis (.txt file):
@@ -426,9 +423,8 @@ Tina2Lego allows to attach to each transition of an (underlined) Petri net draw 
 \subfigure[]{\includegraphics[width=.7\linewidth]{t2l-0}}\\
 \subfigure[]{\includegraphics[width=.28\linewidth]{page}}%
 \subfigure[]{\includegraphics[width=.7\linewidth]{t2l-1}}
-\caption{Tina2Lego translator interface}
+\caption{Tina2Lego translator interface}\label{tina2lego}
 \end{center}
-\label{tina2lego}
 \end{figure}
 
 Before starting the translation, you need an IPN model in the format .net; first edit an IPN in graphic mode ({\tt .ndr} file) using Tina, after execute steps 1 to 3 in section~\ref{modeling}, then textify this model.
@@ -612,8 +608,7 @@ in Menu Cible (target), choose {\tt Explorateur},
 \begin{figure}[!ht]
 \subfigure[]{\includegraphics[width=.5\linewidth]{Simu_1}}%
 \subfigure[]{\includegraphics[width=.5\linewidth]{Simu_3}}%
-\caption{IPN Simulator Interface}
-\label{simu}
+\caption{IPN Simulator Interface}\label{simu}
 \end{figure}
 
 \end{document}
