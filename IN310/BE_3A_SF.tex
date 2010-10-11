@@ -63,7 +63,7 @@ The components of this platform are:
 \end{itemize}
 
 \subsection{Specification}
-\label{spec}
+\label{specs}
 
 The goal is to design a (hybrid) attitude control considering only the control laws; the
 communication between the satellite and the ground station \emph{is not taken into account}.
@@ -92,8 +92,8 @@ and the reference (setpoint).
 	\subfigure[Satellite block diagram]{\includegraphics[width=.45\linewidth]{sat}}\quad
 	\subfigure[Platform model]{\includegraphics[width=.45\linewidth]{platef}}\\
 	\subfigure[Motor\&Elec. part]{\includegraphics[width=.9\linewidth]{elec}}\\
-	\subfigure[P controler]{\includegraphics[width=.23\linewidth]{P}}\quad
-	\subfigure[PI controler]{\includegraphics[width=.45\linewidth]{PI}}\quad
+	\subfigure[P controller]{\includegraphics[width=.23\linewidth]{P}}\quad
+	\subfigure[PI controller]{\includegraphics[width=.45\linewidth]{PI}}\quad
 	\subfigure[Speed estimator]{\includegraphics[width=.23\linewidth]{pseudo}}
 \caption{The Simulink skeleton model provided}
 \label{satel}
@@ -143,76 +143,53 @@ Matlab environment the followings signals (see fig.~\ref{satel}(a)):
 \item Speed Sensor OK/ Speed Sensor KO : a boolean signal with SpeedKO=1 if there is a sensor failure and SpeedKO=0 if the sensor is working well.
 \end{itemize}
 
-To help you progress in the controler design, the lab is decomposed in several steps. Please, save
+To help you progress in the controller design, the lab is decomposed in several steps. Please, save
 your models at each step using different names to get a trace of your progress.
 
 \subsection{PowerOn/PowerOff transition}
 First, consider the PowerOn/PowerOff signal. Write a StateFlow model with two states representing
-the fact that the control is either On or Off. In the 'Off' state, the control mist be set to $0$.
-In the 'On' state, the considered control law is for the moment the P controller.
+the fact that the control is either On or Off. For the moment, in both states the control must be set to $0$.
 
 \paragraph{Creating your Stateflow:}
 \begin{itemize}
-\item Download file {\tt BE\_Sat.zip} from {\tt Public/DISTRIB/defay} in your folder;
+\item Download file {\tt BE\_Sat.zip} from \begin{verbatim}\\panpan\public\distrib\f.defay\end{verbatim} in your folder;
 	there are 2 folders, {\bf sf\_Sat} for simulation and {\bf sf\_cible} for execution. 
-\item Open Matlab; define the active directory as {\tt sf\_Sat}, run {\tt interface\_simu.m}:
-	there are the Simulink blocks of fig.~\ref{satel};% write down the equations describing it;
-\item Create a new stateflow model:
+\item Open Matlab; define the active directory as {\tt sf\_Sat}, open {\tt sf\_Sat.mdl}:
+	you can see the Simulink blocks of fig.~\ref{satel};
+\item Double-click on the main Chart to open the corresponding block;
+\item Create the two states draging the first icon on the left top to the Stateflow window;
+\item On each state, write first the state label;
+\item Define the inputs/outputs and events of your StateFlow:
 	\begin{itemize}
-	\item Menu View/Simulink Library (icon \includegraphics[width=.5cm]{iconLib});
-	\item double-click on block "Blocksets \& Toolboxes";
-	\item double-clik on block Stateflow (SF); 
-	\item drag a Chart block in the mdl file and change the name it; 
-	\item double-click in the block to create a Stateflow model.
-	\end{itemize}
-\item Create your states draging the first icon on the left top to the Stateflow window; 
-	replace the "?" by the state name;
+	\item from the Add menu, select Data/Output from Simulink (select General tab); in the Name field,
+		choose the name of your output ($u$); in the Type field, select the data type;
+	\item you can see in the Simulink model (by clicking the icon up-arrow in the Stateflow Editor)
+		that the output $u$ appears in the SF block;
+	\item connect the output of the SF block to the satellite model;
+	\item create your transitions by putting the mouse on the border of the source state and draging it to the target state;
+		click on the transition (it will become red), then click next to the question mark "?" and type the name of the event;
+	\item define edge-triggered events: in the Stateflow editor, Add Menu, select Event/Input from Simulink;
+		define the {\tt Power} event, with the good trigger type (either "Rising", "Either" or "Falling");
+		using the up-arrow icon, verify	that there is a trigger symbol in the SF;
+	\item connect the edge-triggered events to the input signals;
+	\end{itemize}	
+\item Add the command value to both states ($u=0;$).
 \end{itemize}
-
-You need to define the \emph{outputs} of your SF as well the \emph{inputs}, 
-the \emph{state actions} and the \emph{trigger conditions}:
-\begin{enumerate}
-\item from the Add menu, select Data/Output from Simulink (select General tab); in the Name field,
-	choose the name of your output $O$; in the Type field, select the data type;%(see 3-13).
-\item you can see in the Simulink model (by clicking the icon up-arrow in the Stateflow Editor)
-	that the output $O$ appear in the SF block;
-\item connect the output of the SF block to the satellite model;%(3-16).
-	save your model with a suffix "Equations";
-\item define state actions: open your file XXX\_ Equations, click after the last letter of the
-	state name, press the Enter key and type your equations and functions call (Simulink Fcn given,
-	see next step);
-\item open the  provided Stateflow model; there are 3 {\tt Fcn functions}: P and PI controllers and 
-	speed estimator. copy each {\tt Fcn function} in the state where it is called;
-	save your model with a suffix "Trans";
-\item create your transitions: open you file XXX\_Trans, put the mouse on the border of the source
-	state and drag the transition to the target state;% (see 6-15);
-	click on each transition (it will become red), then click next to the question mark "?" and
-	type the name of the event;% (6-15);
-\item add a default transition in the initial state;% (see 6-8); 
-	save it as XXX\_Event;
-\item define edge-triggered events: open file XXX\_Event; in the Stateflow editor, Add Menu, 
-	select Event/Input from Simulink;% (see 6-13). 
-	define each event in the order they enter in the mux block of the satellite model (2 events,
-	see fig.~\ref{satel}(b)); you don't need to use the same names, only the order in the mux is
-	important; let the Trigger "Rising", "Either" or "Falling"; using the up-arrow icon, verify
-	that there is a trigger symbol in the SF; save the model as XXX\_Trig;
-\item connect the edge-triggered events to the input signals:% (see 7-4): 
-	open XXX\_Trig file; in the Simulink window, connect the mux output to the trigger input of 
-	the SF;
-\item if there is no errors, you can now simulate your hybrid model. Have fun!
-\end{enumerate}
 
 Save the model and simulate it (see sec. \ref{simu}) to verify its behavior.
 
+\subsection{Control law}
+Modify the 'On' state to have $u$ computed using the P controller.
+
 \subsection{Position error}
 Consider now the position error. Depending on the magnitude of this error, the control law must
-be either a P or a PI controler.
+be either a P or a PI controller (see sec. \ref{specs}).
 
 \subsection{Speed sensor failure}
 Consider now that the speed sensor can fail. In that case, you should use the speed estimator
-in addition to the controler used depending on the position error value.
+in addition to the controller used depending on the position error value (see sec. \ref{specs}).
 
-\subsection{Remarks on Stateflow execution}
+\subsection{Remarks on StateFlow execution}
 
 The stateflow is awaken at each event occurrence (rising or falling edge) or at some sampling 
 frequency, given by the clock block of simulink. The continuous functions executed in a state can 
@@ -221,8 +198,10 @@ control laws must be calculated at the same frequency. There are two ways to do 
 fixed step solver for Simulink or put a self-transition in this state with an event \texttt{clock} 
 as a label.
 
-\section{Simulating your Stateflow}
+\section{Simulating your StateFlow}
 \label{simu}
+
+Run {\tt interface.m} to launch the simulation control interface.\\
 
 Two scopes to analyze your input and output signals are already in the provided skeleton.
 To connect a signal, right click on its line and choose {\tt Connect to Existent Viewer}.
