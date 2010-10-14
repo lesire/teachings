@@ -1,0 +1,96 @@
+\documentclass[a4paper]{article}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[figbotcap]{subfigure}  % use for side-by-side figures - ver  http://linuxdicas.wikispaces.com/latex
+\usepackage{graphicx,amssymb,algorithmic,algorithm,url,hyperref,tikz,exam}
+\usepackage[babel=true,kerning=true]{microtype} % <- bug labels tikz
+\usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
+
+\graphicspath{{../figures/}}
+
+\paper{IN310}
+\school{ISAE - Supaero}
+\subject{EXAMEN}
+\title{Modèles de Systèmes Embarqués : modèles discrets, modèles hybrides}
+\semester{3A SEM}
+\year{2010-2011}
+\note{Tous documents autorisés.}
+
+\begin{document}
+
+\begin{center}
+  \large{\bf \textsc{Exercice} A\\[5mm]
+    \textsc{Réseaux de Petri}}
+\end{center}
+
+On modélise par le réseau de Petri de la figure \ref{petri} le fonctionnement d'un atelier qui doit réaliser deux types de pièces.
+Pour le premier type de pièce, un opérateur doit placer la pièce dans une machine puis la retirer quand la machine a fini son travail.
+Le deuxième type de pièce est traité de façon manuelle par un des deux opérateurs.
+
+\begin{figure}[!h]
+\begin{center}
+	\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
+	\tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  	\tikzstyle{transition}=[rectangle,thick,draw=black!75,fill=black!20,minimum size=4mm]
+
+    \node [transition] (t1) [label=above:$t_1$] {};
+    \node [place] (p1) [below of=t1,label=left:$p_1$] {};
+    \node [transition] (t2) [below of=p1,label=right:$t_2$] {};
+    \node [place] (p2) [below of=t2,label=left:$p_2$] {};
+    \node [transition] (t3) [below of=p2,label=right:$t_3$] {};
+    \node [place] (p3) [below of=t3,label=left:$p_3$] {};
+    \node [transition] (t4) [below of=p3,label=left:$t_4$] {};
+    \node [place,tokens=1] (p4) [left of=p2,label=left:$p_4$] {};
+    \node [place,tokens=2] (p5) [right of=p1,label=left:$p_5$] {};
+    \node [place] (p6) [right of=p5,label=right:$p_6$] {};
+    \node [transition] (t5) [above of=p6,label=right:$t_5$] {};
+    \node [transition] (t6) [below of=p6,label=right:$t_6$] {};
+
+	\draw (t1)
+		edge [pre,bend left] (p5)
+		edge [post] (p1);
+	\draw (t2)
+		edge [pre] (p1)
+		edge [pre,bend right] (p4)
+		edge [post] (p2)
+		edge [post,bend right] (p5);
+	\draw (t3)
+		edge [pre] (p2)
+		edge [pre] (p5)
+		edge [post] (p3)
+		edge [post,bend left] (p4);
+	\draw (t4)
+		edge [pre] (p3)
+		edge [post,bend right] (p5);
+	\draw (t5)
+		edge [pre,bend right] (p5)
+		edge [post] (p6);
+	\draw (t6)
+		edge [pre] (p6)
+		edge [post,bend left] (p5);
+	\end{tikzpicture}
+	\caption{Réseau de Petri de l'atelier.}
+	\label{petri}
+\end{center}
+\end{figure}
+
+\begin{questions}
+\question Donner la signification des six places de la figure \ref{petri}.
+\question Donner les matrices Pre et Post du réseau.
+\question Etudier les propriétés du réseau :
+	\begin{enumerate}
+	\item le réseau est-il borné ?
+	\item le réseau est-il vivant ?
+	\item le réseau est-il ré-initialisable ?
+	\end{enumerate}
+\question Trouver au moins deux invariants de place du réseau. Que représentent-t-ils ?
+\end{questions}
+
+\begin{center}
+  \large{\bf \textsc{Exercice} B\\[5mm]
+    \textsc{Automates}}
+\end{center}
+
+\end{document}
+
