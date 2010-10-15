@@ -279,6 +279,23 @@
 \headwidth\textwidth}
 \def\ps@fancyplain{\ps@fancy \let\ps@plain\ps@plain@fancy}
 \def\ps@plain@fancy{\@fancyplaintrue\ps@fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% definition of exercices
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{exercice}
+\newcommand{\exercice}[1]{%
+	\refstepcounter{exercice}{%
+	\begin{center}
+		\rule{9cm}{0.4pt}\\[5mm]
+		\large \bfseries \textsc{Exercice}~\Alph{exercice}\\[5mm]
+		\textsc{#1}
+	\end{center}	
+	}
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -286,11 +303,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{questions}%
-{\setlength{\leftmargini}{0pt}
+{\setlength{\leftmargini}{2mm}
 \setlength{\leftmarginii}{8mm}
 \setlength{\leftmarginiii}{10mm}
 
-\renewcommand{\labelenumi}{{\bf \theenumi.}}
+\renewcommand{\labelenumi}{{\bf \Alph{exercice}.\theenumi.}}
 \renewcommand{\labelenumiii}{(\theenumiii)}
 \begin{enumerate}\addtolength{\itemsep}{2mm}
 \def\question{\filbreak\item}\let\ques\question}
@@ -476,8 +493,6 @@ ID No: \rule{3cm}{0.4pt}\par}
 \chead{\ifnum\thepage=1\else
  -- \thepage\ --\fi}
 \rhead{\vbox{\bf\baselineskip14pt\raggedleft\paperv}}
-\rfoot{CONTINUED} 
+%\rfoot{CONTINUED}
 \cfoot{}
- 
-
 
