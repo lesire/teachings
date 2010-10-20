@@ -3,7 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[figbotcap]{subfigure}  % use for side-by-side figures - ver  http://linuxdicas.wikispaces.com/latex
-\usepackage{graphicx,amsmath,amssymb,algorithmic,algorithm,url,hyperref,tikz,exam}
+\usepackage{graphicx,amsmath,amssymb,algorithmic,algorithm,url,hyperref,tikz,exam,enumitem}
 \usepackage[babel=true,kerning=true]{microtype} % <- bug labels tikz
 \usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
 
@@ -79,15 +79,102 @@ Le deuxième type de pièce est traité de façon manuelle par un des deux opér
 \end{figure}
 
 \begin{questions}
-\question Donner la définition du réseau $R$ de la figure \ref{petri} ($P$, $T$, $Pre$ et $Post$) et son marquage initial $M_0$.
-\question Donner la signification des six places du réseau $R$.
+\question Donner la définition du réseau $R$ de la figure \ref{petri} ($P$, $T$, $Pre$ et $Post$) et son marquage initial $M_0$. \marks{1}
+
+\begin{correction}{.8}
+	$R = <P, T, Pre, Post>$ avec :
+	\begin{eqnarray*}
+	P &=& \{p_1, p_2, p_3, p_4, p_5, p_6\}\\
+	T &=& \{t_1, t_2, t_3, t_4, t_5, t_6\}\\
+	Pre &=& \begin{pmatrix}
+	  % t1  t2  t3  t4  t5  t6
+		0 & 1 & 0 & 0 & 0 & 0 \\ % p1
+		0 & 0 & 1 & 0 & 0 & 0 \\ % p2
+		0 & 0 & 0 & 1 & 0 & 0 \\ % p3
+		0 & 1 & 0 & 0 & 0 & 0 \\ % p4
+		1 & 0 & 1 & 0 & 1 & 0 \\ % p5
+		0 & 0 & 0 & 0 & 0 & 1    % p6
+		\end{pmatrix}\\
+	Post &=& \begin{pmatrix}
+	  % t1  t2  t3  t4  t5  t6
+		1 & 0 & 0 & 0 & 0 & 0 \\ % p1
+		0 & 1 & 0 & 0 & 0 & 0 \\ % p2
+		0 & 0 & 1 & 0 & 0 & 0 \\ % p3
+		0 & 0 & 1 & 0 & 0 & 0 \\ % p4
+		0 & 1 & 0 & 1 & 0 & 1 \\ % p5
+		0 & 0 & 0 & 0 & 1 & 0    % p6
+		\end{pmatrix}\\
+	M_0 &=& \begin{pmatrix} 0\\ 0\\ 0\\ 1\\ 2\\ 0\end{pmatrix}
+	\end{eqnarray*}	
+\end{correction}
+
+\question Donner la signification des six places du réseau $R$. \marks{2}
+
+\begin{correction}{.8}
+	\begin{itemize}
+	\item $p_4$ et $p_5$ représentent les ressources disponibles :
+		\begin{itemize}
+		\item $p_4$ représente la disponibilité de la machine ;
+		\item $p_5$ représente la disponibilité des opérateurs ;
+		\end{itemize}
+	\item $p_6$ représente le traitement d'une pièce de type 2 ;
+	\item $p_1$, $p_2$ et $p_3$ représentent le traitement d'une pièce de type 1 :
+		\begin{itemize}
+		\item $p_1$ représente le placement de la pièce dans la machine,
+		\item $p_2$ son traitement par la machine, et
+		\item $p_3$ son retrait de la machine.
+		\end{itemize}
+	\end{itemize}
+\end{correction}
+
 \question Etudier les propriétés du réseau $R$ :
 	\begin{enumerate}
-	\item $R$ est-il borné ? Si oui, donner la valeur de la borne ;
-	\item $R$ est-il vivant ?
-	\item $R$ est-il réinitialisable ?
+	\item $R$ est-il borné ? Si oui, donner la valeur de la borne ; \marks{2}
+	\item $R$ est-il vivant ? \marks{1}
+	\item $R$ est-il réinitialisable ? \marks{1}
 	\end{enumerate}
-\question Trouver au moins deux invariants de place du réseau. Que représentent-t-ils ?
+	
+\begin{correction}{.8}
+L'étude de ces propriétés peut se faire en calculant le graphe des marquages de $R$ depuis $M_0$.
+Un modèle Tina (atelier.nd) est joint à ce corrigé afin de permettre de visualiser le graphe des marquages.
+Dans ce cas ci, ce calcul peut être évité, en remarquant :
+	\begin{enumerate}[leftmargin=1cm]
+	\item que toute transition produit autant de jeton que ce qu'elle en consomme 
+		($\forall t, \, Pre(.,t) = Post(.,t)$) ; donc il n'y aura jamais plus de 3 jetons dans ce réseau.
+		$R$ est donc $k$-borné, avec $2 \leq k \leq 3$ ;
+	\item que la séquence $M_0 \overset{t_1t_2t_1t_1}{\longrightarrow}$ mène à un blocage,
+		aucune transition n'étant franchissable dans le marquage atteint ; le réseau n'est donc pas vivant ;
+	\item et pour les mêmes raisons, le réseau n'est pas réinitialisable.
+	\end{enumerate}
+\end{correction}
+	
+\question Trouver au moins deux invariants de place du réseau. Que représentent-t-ils ? \marks{3}
+
+\begin{correction}{.8}
+Soit $f_1 = \begin{pmatrix} 1 & 0 & 1 & 0 & 1 & 1\end{pmatrix}$,
+\begin{eqnarray*}
+f_1 . C &=& f_1 . (Post - Pre)\\
+	&=& \begin{pmatrix} 1 & 0 & 1 & 0 & 1 & 1\end{pmatrix} . \begin{pmatrix}
+	  % t1  t2  t3  t4  t5  t6
+		1 & -1 & 0 & 0 & 0 & 0 \\ % p1
+		0 & 1 & -1 & 0 & 0 & 0 \\ % p2
+		0 & 0 & 1 & -1 & 0 & 0 \\ % p3
+		0 & -1 & 1 & 0 & 0 & 0 \\ % p4
+		-1 & 1 & -1 & 1 & -1 & 1 \\ % p5
+		0 & 0 & 0 & 0 & 1 & -1    % p6
+		\end{pmatrix}\\
+	&=& \begin{pmatrix} 0 & 0 & 0 & 0 & 0 & 0\end{pmatrix}
+\end{eqnarray*}
+$f_1$ est donc une composante conservative, et $\forall M, \, f_1 . M = f_1 . M_0 = 2$.
+Cet invariant de place représente le fait qu'il y a toujours 2 opérateurs dans l'atelier, occupés à diverses tâches.\\
+
+Soit $f_2 = \begin{pmatrix}0 & 1 & 0 & 1 & 0 & 0\end{pmatrix}$, $f_2 . C = 0 $, $f_2$ est donc une 
+composante conservative, et $\forall M, \, f_2 . M = f_2 . M_0 = 1$.
+Cet invariant de place représente le fait que la machine est soit disponible, soit occupée par une pièce.\\
+
+$R$ est complètement couvert par les composantes $f_1$ et $f_2$, $R$ est donc borné, et ça borne vaut $2$.
+\end{correction}
+
 \end{questions}
 
 \subsection*{Rappels de cours}
