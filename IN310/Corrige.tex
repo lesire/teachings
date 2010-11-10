@@ -177,29 +177,6 @@ $R$ est complètement couvert par les composantes $f_1$ et $f_2$, $R$ est donc b
 
 \end{questions}
 
-\subsection*{Rappels de cours}
-
-Soit $R = <P, T, Pre, Post>$ un réseau de Petri, $M_0$ son marquage initial, et $A$ l'ensembe des marquages accessibles de $R$ depuis $M_0$.
-
-\begin{definition}[Réseau borné]
-$R$ est borné si et seulement si $\exists k \in \mathbb{N}$ tel que $\forall M \in A$, $\forall p \in P$, $M(p) \leq k$.
-\end{definition}
-
-\begin{definition}[Réseau vivant]
-$R$ est vivant si et seulement si $\forall t \in T$, $\forall M \in A$, il existe une séquence de tir $s$ et un marquage $M' \in A$ tels que
-$M \overset{st}{\longrightarrow} M'$.
-\end{definition}
-
-\begin{definition}[Réseau réinitialisable]
-$R$ est réinitialisable si et seulement si $\forall M \in A$, il existe une séquence de tir $s$ telle que 
-$M \overset{s}{\longrightarrow} M_0$.
-\end{definition}
-
-\begin{definition}[Composante conservative]
-Une composante conservative de $R$ est une combinaison linéaire des marquages des places du réseau, représentée par une vecteur $f$, 
-telle que $\forall M \in A$, $f.M = f.M_0$.
-\end{definition}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% AUTOMATES %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
