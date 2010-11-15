@@ -1,9 +1,9 @@
 \documentclass[a4paper]{article}
-\usepackage[francais]{babel}
-\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+%\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[figbotcap]{subfigure}  % use for side-by-side figures - ver  http://linuxdicas.wikispaces.com/latex
-\usepackage{graphicx,amsmath,amssymb,algorithmic,algorithm,url,hyperref,tikz,exam,enumitem}
+\usepackage{graphicx,amsmath,amssymb,algorithmic,algorithm,url,hyperref,tikz,enumitem,exam}
 \usepackage[babel=true,kerning=true]{microtype} % <- bug labels tikz
 \usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
 
@@ -105,7 +105,7 @@ Le deuxième type de pièce est traité de façon manuelle par un des deux opér
 		0 & 0 & 0 & 0 & 1 & 0    % p6
 		\end{pmatrix}\\
 	M_0 &=& \begin{pmatrix} 0\\ 0\\ 0\\ 1\\ 2\\ 0\end{pmatrix}
-	\end{eqnarray*}	
+	\end{eqnarray*}
 \end{correction}
 
 \question Donner la signification des six places du réseau $R$. \marks{2}
@@ -177,20 +177,39 @@ $R$ est complètement couvert par les composantes $f_1$ et $f_2$, $R$ est donc b
 
 \end{questions}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% AUTOMATES %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\newpage
 \exercice{Automates}
 
 \begin{questions}
 \question \textbf{Équivalence pour des systèmes : } Rappeler, à l'aide d'un exemple, en quoi l'équivalence de traces n'est
 	pas toujours suffisante pour comparer deux systèmes.\\
 	\emph{Réponse de 5 lignes maximum + un dessin éventuellement}
-\question \textbf{Automates temporisés : } Considérons l'automate temporisé de la figure \ref{automateT} sur l'alphabet (ensemble de labels)
-	$\Sigma=\{a_1,a_2,a_3\}$, comportant une horloge $x$. Donner, sans justification,  deux exemples de traces temporisées reconnues par cet
-	automate. (Donner des séquences sur $\Sigma \times \mathbb{R}_+$, c'est à dire des séquences de paires (\texttt{label}, 
-	\texttt{durée d'attente})).
+\marks{2}
+
+\begin{correction}{.8}
+  L'équivalence de traces ne prend pas en compte le branchement, c'est
+  à dire la prise en compte de différentes manières de poursuivre
+  l'exécution depuis un état donné. Dans l'exemple suivant, les deux
+  automates $\mathcal{A}_1$ et $\mathcal{A}_2$ sont équivalents au
+  sens de l'équivalence de traces, mais mis en présence de $\mathcal{B}$,
+  $\mathcal{A}_1||\mathcal{B}$ ne possède pas de deadlock, alors que
+  $\mathcal{A}_2||\mathcal{B}$ si.
+\begin{center}
+\includegraphics[width=6cm]{equiv_traces}
+\end{center}
+\end{correction}
+
+\question \textbf{Automates temporisés : } Considérons l'automate
+temporisé de la figure \ref{automateT} sur l'alphabet (ensemble de
+labels) $\Sigma=\{a_1,a_2,a_3\}$, comportant une horloge $x$. Donner,
+sans justification, deux exemples de traces temporisées reconnues par
+cet automate. (Donner des séquences sur $\Sigma \times \mathbb{R}_+$,
+c'est à dire des séquences de paires (\texttt{label}, \texttt{durée
+  d'attente})). \marks{2}
 	\begin{figure}[!h]
 		\begin{center}
 		\includegraphics[width=6cm]{automate_temp}
@@ -198,70 +217,68 @@ $R$ est complètement couvert par les composantes $f_1$ et $f_2$, $R$ est donc b
 		\caption{Automate temporisé.}
 		\label{automateT}
 	\end{figure}
-\question La sémantique d'un automate temporisé est donnée par un système de transitions temporisé, dont l'espace d'état est infini.
-	Rappeler les grandes idées de la construction d'un système de transitions fini (qui permet donc de vérifier certaines propriétés)
+
+\begin{correction}{.8}
+Deux traces acceptées par l'automate:\\
+$(a_1,3);(a_3,1.2)$\\
+$(a_1,4.1);(a_2,3.3);(a_1,3.1);(a_3,1.5)$
+\end{correction}
+
+        \question La sémantique d'un automate temporisé est donnée par
+        un système de transitions temporisé, dont l'espace d'état est
+        infini.  Rappeler les grandes idées de la construction d'un
+        système de transitions fini (qui permet donc de vérifier
+        certaines propriétés)
 	<<équivalent>> au système de transition temporisé infini. Dans quel sens est-il équivalent?\\
-	\emph{Réponse de 10 lignes maximum }
+	\emph{Réponse de 10 lignes maximum } \marks{3}
+
+\begin{correction}{.8}
+L'ensemble des configurations d'un automate temporisé est infini à
+cause du domaine des horloges ($\mathbb{R}_+$). L'idée est de
+construire un ensemble fini de régions pour chaque horloge, telle que
+quelle que soit la valeur d'une horloge dans une région, l'état du
+système soit inchangé (les mêmes invariants et gardes sont
+satisfaits). Une configuration du système abstrait peut alors être donnée par
+un couple (localité, région) plutôt que (localité, valeur des
+horloges). Ce système abstrait est en relation de bisimulation
+temps-abstraite avec le système d'origine, ce qui garantit qu'il
+satisfait les mêmes propriétés.
+\end{correction}
+
 \question Soient $T=(S,S_I,S_F,\rhd )$ et $T'=(S',S'_I,S'_F,\rhd')$ deux systèmes de transitions temporisés. Si $\mathcal{R}$ est une
 	relation de bisimulation temps-abstraite qui respecte l'état
-        initial et l'état final, montrer que \linebreak Untime(L(T))=Untime(L(T')).
+        initial et l'état final, montrer que \linebreak
+        Untime(L(T))=Untime(L(T')). \marks{3}
 \end{questions}
 
-\subsection*{Rappels de cours}
-\begin{definition}[Système de transitions temporisé]
-Un système de transition temporisé sur un alphabet $\Sigma$ est un quadruplet
-$T=(S,S_I,S_F,\rhd)$, où
-\begin{itemize}
-\item $S$ est l'ensemble des états
-\item $S_I \subseteq S$ (resp. $S_F\subseteq S$) est l'ensemble des états initiaux (resp. finaux)
-\item $\rhd \subseteq S \times (\mathbb{R}_+ \times \Sigma) \times S$
-  est la fonction de transition, $s_1 \overset{t,a}{\rhd}s_2$ exprime
-  qu'on peut passer de l'état $s_1$ à l'état $s_2$, en reconnaissant
-  le label $a\in \Sigma$, après avoir attendu $t\in \mathbb{R}^+$
-  unités de temps.
-\end{itemize} 
-\end{definition}
+\begin{correction}{.8}
+Soit $(a_1,\ldots, a_n)\in Untime(L(T))$. 
+$\exists (t_1,\ldots , t_n), \exists (s_1,\ldots,s_{n+1})$ tels que
+$s_1\overset{t_1,a_1}{\rhd}s_2 \overset{t_2,a_2}{\rhd} \ldots
+\overset{t_n,a_n}{\rhd}s_{n+1}$ et $s_{n+1}\in S_F$. 
 
-\begin{definition}[Bisimulation temps-abstraite]
-Soient $T=(S,S_I,S_F,\rhd)$ et $T'=(S',S_I',S_F',\rhd')$ deux systèmes
-de transitions temporisés sur $\Sigma$.
-$\mathcal{R} \subseteq S\times S'$ est une relation de bisimulation
-temps-abstraite ssi elle est \textbf{symétrique} et :
+Montrons par récurrence sur $k$ que $\forall k\in [|1..n+1|] \exists
+t'_k,s'_k,s'_{k+1}$ tels que $s_k\mathcal{R} s'_k$,
+$s_{k+1}\mathcal{R} s'_{k+1}$, et $s'_k\overset{t'_k,a_k}{\rhd}s'_{k+1}$.
 
-\begin{tabular}{ll}
- si &$(s_1,s_1')\in \mathcal{R}$ et $s_1 \overset{t,a}{\rhd}s_2$ alors
-  $\exists s_2'\in S' \ \exists t'\in \mathbb{R}_+$ tels que\\
-  &$(s_2,s_2')\in \mathcal{R}$ et $s_1'\overset{t',a}{\rhd}s_2'$\\
-\end{tabular}
+$\bullet$ $\mathcal{R}$ étant une relation de bisimulation, l'hypothèse est
+trivialement vérifiée au rang 1.
+ 
+$\bullet$ Supposons l'hypothèse de récurrence vraie au rang k. Alors, on a
+$s_{k+1}\mathcal{R} s'_{k+1}$. Par ailleurs,
+$s_{k+1}\overset{t_{k+1},a_{k+1}}{\rhd}s_{k+2}$. Puisque $\mathcal{R}$ est une
+bisimulation temps-abstraite, $\exists t'_{k+1}, s'_{k+1}$ tels que
+$s_{k+2}\mathcal{R}s'_{k+2}$ et  $s'_{k+1}\overset{t'_{k+1},a_{k+1}}{\rhd}s'_{k+2}$.
+Donc l'hypothèse de récurrence est vraie au rang k+1.
 
-On dit que $\mathcal{R}$ \textbf{respecte les états initiaux} (resp. \textbf{finaux}) si \\
-$
-\begin{array}{llcl}
-\forall s\in S & s\in S_I (\text{resp.} S_F)& \quad \text{si et
-  seulement si} \quad & \exists s'\in S_I' (\text{resp.} S_F') \text{
-  tel que } s\mathcal{R}s'\\
-\forall s'\in S' & s'\in S'_I (\text{resp.} S'_F)& \quad \text{si et
-  seulement si} \quad & \exists s\in S_I (\text{resp.} S_F) \text{
-  tel que } s'\mathcal{R}s\\
-\end{array}
-$
-\end{definition}
+On a donc prouvé qu'il existe $(s'_1, \ldots, s'_{n+1})$ et
+$(t'_1,\ldots , t'_n)$ et tels que $s'_1\overset{t'_1,a_1}{\rhd}s'_2
+\overset{t'_2,a_2}{\rhd} \ldots \overset{t'_n,a_n}{\rhd}s'_{n+1}$. De
+plus, puisque $\mathcal{R}$ respecte les états initiaux et finaux,
+$s'_1\in S'_I$, $s'_{n+1}\in S'_F$. Donc $(a_1,\ldots, a_n)\in
+Untime(L(T'))$.
 
-\begin{definition}[Langage reconnu]
-Étant donné système de transition temporisé $T=(S,S_I,S_F,\rhd)$, le
-langage $L(T)$ reconnu
-par $T$ est l'ensemble des séquences sur $\Sigma\times \mathbb{R}_+$ $<(a_0,t_0), (a_1,t_1), \ldots,
-(a_n,t_n)>$ telles qu'il existe une séquence d'états
-$<s_0,\ldots,s_{n+1}>$ qui vérifie 
-\begin{itemize}
-\item $s_0\in S_I$, $s_{n+1}\in S_F$
-\item $\forall i\in [0..n] \quad s_i \overset{a_i,t_i}{\rhd}s_{i+1}$
-\end{itemize}
-
-
-Le langage $Untime(L(T))$ est l'ensemble des séquences sur $\Sigma$
-$<a_0,\ldots ,a_n>$ telles qu'il existe une séquence sur $\mathbb{R}_+$
-$<t_0, \ldots ,t_n>$ qui vérifie $<(a_0,t_0),\ldots ,(a_n,t_n)>\in L(T)$.
-\end{definition}
+De manière symétrique, on peut prouver que  $Untime(L(T')) \subseteq  Untime(L(T))$.
+\end{correction}
 
 \end{document}
