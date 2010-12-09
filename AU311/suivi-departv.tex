@@ -1,0 +1,24 @@
+%%%% Tikz Picture du rdP de Départ Vehicule
+%% Petri net
+\node[transition] (t1) {}; \node[node distance=12pt, left of=t1] {$t_1$};
+\node[place, below of=t1] (c2) {}; \node[node distance=18pt, left of=c2] {$c_2$};
+\node[place, left of=c2] (a2) {}; \node[node distance=18pt, below right of=a2] {$a_2$};
+\node[place, right of=c2] (a1) {}; \node[node distance=18pt, left of=a1] {$a_1$};
+\node[place, right of=a1] (c1) {}; \node[node distance=18pt, left of=c1] {$c_1$};
+\node[transition, above of=c1] (t0) {}; \node[node distance=12pt, left of=t0] {$t_0$};
+\node[transition, below of=a2] (t2) {}; \node[node distance=12pt, right of=t2] {$t_2$};
+\node[transition, below of=c2] (t3) {}; \node[node distance=12pt, left of=t3] {$t_3$};
+\node[place, below of=t2] (a3) {}; \node[node distance=18pt, right of=a3] {$a_3$};
+\node[place, below right of=t3] (a4) {}; \node[node distance=18pt, left of=a4] {$a_4$};
+\node[transition, below right of=a4] (t4) {}; \node[node distance=12pt, left of=t4] {$t_4$};
+\node[place, below of=t4] (c3) {}; \node[node distance=18pt, left of=c3] {$c_3$};
+\node[place, left of=c3] (a5) {}; \node[node distance=18pt, below right of=a5] {$a_5$};
+\node[transition, below of=a5] (t5) {}; \node[node distance=12pt, right of=t5] {$t_5$};
+\node[transition, below of=c3] (t6) {}; \node[node distance=12pt, left of=t6] {$t_6$};
+\node[place, below of=t5] (a6) {}; \node[node distance=18pt, right of=a6] {$a_6$};
+%% Post
+\foreach \t/\p in {t1/a2,t1/c2,t0/a1,t0/c1,t2/a3,t3/a4,t4/a5,t4/c3,t5/a6}
+	\path (\t) edge[post] (\p);
+%% Pre
+\foreach \p/\t in {a2/t2,c2/t3,a1/t3,c1/t4,a3/t3,a4/t4,a5/t5,c3/t6,a6/t6}
+	\path (\t) edge[pre] (\p);

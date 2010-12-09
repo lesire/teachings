@@ -1,0 +1,17 @@
+
+\node[place, label=right:OPDES] (p0) at (3, 7) {};
+\node[place, label=right:ALT] (p1) at (3, 5) {};
+\node[place, label=right:ALT] (p2) at (3, 3) {};
+\node[place, label=right:LOC] (p3) at (3, 1) {};
+\node[place] (p6) at (0, 6) {};
+\node[place] (p7) at (0, 2) {};
+\node[transition] (t0) at (3, 6) {};
+\node[transition, label=left:$d < 10$] (t1) at (1.5, 4) {};
+\node[transition] (t2) at (3, 2) {};
+\node[transition, label=left:$r. 145$] (t3) at (1.5, 0) {};
+%% Post
+\foreach \t/\p in {t0/p1,t1/p2,t1/p7,t2/p3}
+	\path (\t) edge[post] (\p);
+%% Pre
+\foreach \p/\t in {p0/t0,p1/t1,p6/t1,p2/t2,p3/t3,p7/t3}
+	\path (\t) edge[pre] (\p);
