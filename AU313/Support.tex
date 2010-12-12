@@ -1,0 +1,18 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{pdfpages}
+\usepackage{anysize}
+\marginsize{3cm}{2cm}{1cm}{1cm}
+
+\begin{document}
+%% Page de garde
+\includepdf[pages=1,scale=.8,nup=1x1]{SEM.pdf}
+%% Partie SEM
+\includepdf[pages=-,nup=2x3,scale=.9]{SEM.pdf}
+%% Partie Petri
+\includepdf[pages=-,nup=2x3,scale=.9]{Petri.pdf}
+%% Partie SH
+\includepdf[pages=-,nup=2x3,scale=.9]{SH.pdf}
+\end{document}
