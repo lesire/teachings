@@ -20,3 +20,10 @@ install_manifest.txt
 *.snm
 *.out
 *.nav
+*.bbl
+*.blg
+*.exp.gnuplot
+*.exp.table
+*.gz
+*.url
+*.vrb
